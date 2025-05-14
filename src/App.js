@@ -1,26 +1,13 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-import React from 'react'
 
-const App = () => {
-  return (
-    <div>
-        <h1>MDT</h1>
-    </div>
-  )
-}
-
-export default App
-=======
 import logo from './logo.svg';
-=======
+
 import React from 'react';
 import {
   BrowserRouter as Router,
   Routes,
   Route
 } from 'react-router-dom';
->>>>>>> 694bf53 (Initial commit)
+
 import './App.css';
 import Home from './pages/home/Home';
 import About from './pages/about/About';
@@ -49,4 +36,3 @@ const App = () => {
 };
 
 export default App;
->>>>>>> b956708 (Initialize project using Create React App)
