@@ -1,20 +1,16 @@
 {
-<<<<<<< HEAD
   "name": "frontend_site",
-=======
-  "name": "mdt",
->>>>>>> b956708 (Initialize project using Create React App)
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
-<<<<<<< HEAD
+
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^13.5.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-=======
+
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "react": "^19.1.0",
