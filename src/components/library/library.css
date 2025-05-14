@@ -1,0 +1,239 @@
+.library-container {
+    font-family: 'Times New Roman', serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    color: #333;
+  }
+  
+  .top-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+  }
+  
+  .left-text {
+    width: 50%;
+    margin-left: 2rem;
+  }
+  
+  .left-text h1 {
+    margin-bottom: 20px;
+    font-family: var(--font-family);
+    color: var(--color-subtext);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 25.2px;
+    letter-spacing: 8px;
+
+  }
+  
+  .left-text h2 {
+    margin-bottom: 15px;
+    font-family: var(--font-local);
+    color: #221917;
+    font-weight: 400;
+    font-size: 80px;
+    line-height: 66px;
+    letter-spacing: -1px;
+
+  }
+  
+  .left-text p {
+    margin-bottom: 25px;
+    font-family: var(--font-family);
+    color: #221917;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 27.2px;
+  }
+  
+  .buttons-container {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+  }
+  
+  .btn {
+    padding: 12px 25px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .other-books-btn {
+    background-color: var(--color-subtext);
+    color: #fff;
+    font-family: var(--font-family);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 27.2px;
+    letter-spacing: 0%;
+    text-align: center;
+    width: 251;
+    height: 62;
+    gap: 10px;
+    padding-top: 17px;
+    padding-right: 32px;
+    padding-bottom: 17px;
+    padding-left: 32px;
+
+  }
+  
+  .order-btn {
+    background-color:  var(--color-specibutton2);
+    color: #fff;
+    font-family: var(--font-family);
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 27.2px;
+    letter-spacing: 0%;
+    text-align: center;
+    width: 251;
+    height: 62;
+    gap: 10px;
+    padding-top: 17px;
+    padding-right: 32px;
+    padding-bottom: 17px;
+    padding-left: 32px;
+  }
+  
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+  
+  .right-image {
+    width: 35%;
+    margin-top: -60px; /* Ajustement spécifique pour l'image droite */
+    margin-left: -10px;
+}
+  
+  .right-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+  
+  .bottom-gallery {
+    display: flex;
+    margin: 50px 0; /* Réduction de la marge verticale */
+    width: 100%; /* Prend toute la largeur */
+    overflow: hidden; /* Empêche tout débordement */
+  }
+  
+  .bottom-gallery img {
+    flex: 1; /* Chaque image prend une part égale */
+    width: 33.33%; /* Largeur précise pour 3 images */
+    height: 200px; /* Hauteur fixe réduite (ajustez selon vos besoins) */
+    object-fit: cover; /* Garantit que l'image couvre tout l'espace sans déformation */
+    display: block; /* Supprime l'espace sous les images */
+  }
+  /* ==================== */
+/* MEDIA QUERIES TABLETTE (769px - 1024px) */
+/* ==================== */
+@media (max-width: 1024px) {
+  .library-container {
+    padding: 15px;
+  }
+
+  .top-section {
+    flex-direction: column;
+    margin-bottom: 30px;
+  }
+
+  .left-text {
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 30px;
+  }
+
+  .left-text h1 {
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: 6px;
+  }
+
+  .left-text h2 {
+    font-size: 60px;
+    line-height: 50px;
+  }
+
+  .right-image {
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 20px;
+  }
+
+  .buttons-container {
+    justify-content: center;
+  }
+
+  .bottom-gallery img {
+    height: 180px;
+  }
+}
+
+/* ==================== */
+/* MEDIA QUERIES MOBILE (jusqu'à 768px) */
+/* ==================== */
+@media (max-width: 768px) {
+  .left-text h1 {
+    font-size: 14px;
+    letter-spacing: 4px;
+  }
+
+  .left-text h2 {
+    font-size: 40px;
+    line-height: 36px;
+  }
+
+  .left-text p {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .buttons-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .right-image {
+    width: 80%;
+    margin-top: 30px;
+  }
+
+  .bottom-gallery {
+    flex-wrap: wrap;
+    margin: 30px 0;
+  }
+
+  .bottom-gallery img {
+    width: 50%;
+    height: 150px;
+  }
+}
+
+/* ==================== */
+/* PETITS MOBILES (jusqu'à 480px) */
+/* ==================== */
+@media (max-width: 480px) {
+  .left-text h2 {
+    font-size: 32px;
+    line-height: 30px;
+  }
+
+  .bottom-gallery img {
+    width: 100%;
+    height: 120px;
+  }
+
+  .right-image {
+    width: 100%;
+  }
+}

@@ -1,0 +1,314 @@
+.mdt__specihead {
+    position: relative;
+    height: 100vh;
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .mdt__specihead-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background: linear-gradient(to top, rgba(235, 207, 122, 0.8), rgba(235, 207, 122, 0));
+  }
+  
+  .mdt__specihead-back1,
+  .mdt__specihead-back2 {
+    width: 100%;
+    height: 140%;
+    position: absolute;
+    background-repeat: none;
+    top: 0;
+    left: 0;
+    background: linear-gradient(to top, #ebcf7a, transparent);
+  }
+  
+  .mdt__specihead-back1 {
+    opacity: 0.5;
+    z-index: -2;
+  }
+  
+  .mdt__specihead-back2 {
+    opacity: 0.7;
+    z-index: -1;
+  }
+  
+  .mdt__specihead-logo {
+    position: absolute;
+    top: 5px;
+    left: 54px;
+    z-index: 1;
+  }
+  
+  .mdt__specihead-logo img {
+    width: 254;
+    height: 52;
+    gap: 10px;
+    
+  }
+  
+  .mdt__specihead-container {
+    position: absolute;
+    margin-top: 20px;
+    flex: 1;
+    font-family: var(--font-family);
+    color: white;
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: row;
+    top: 8px;
+    right: 95px;
+    width: 925;
+    height: 44;
+
+
+
+  }
+
+  .mdt__specihead-container_links {
+    flex-direction: column;
+    justify-content: space-between;
+ 
+  }
+
+  
+  .mdt__specihead-container_links a {
+    margin: 0.5rem;
+    max-width: 10px;
+    flex-wrap: wrap;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+
+  } 
+   .mdt__specihead-container_links a:hover {
+    color: var(--color-specibutton); 
+
+  }
+  .mdt__specihead-container_links a:focus {
+    color: var(--color-specibutton); 
+
+  }
+
+  .mdt__specihead-text{
+    width: 800px;
+    margin-top: 400px;
+
+  }
+  
+  .mdt__specihead-text h1{
+   padding-top: -25rem;
+   flex: 0.7;
+   display: flex; 
+   flex-direction: column;
+   font-family: var(--font-local);
+   font-weight: 400;   
+   font-size: 62px;
+   line-height: 75px;
+   color: #fff;
+
+  }
+  
+ 
+  
+  .donate-button {
+    background-color: var(--color-specibutton);
+    color: white;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 16px; 
+    width: 138;
+    height: 44;
+    padding-top: 8px;
+    padding-right: 16px;
+    padding-bottom: 8px;
+    padding-left: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 1px;
+  }
+.next-culte{
+  position: absolute;
+  width: 100%;
+  margin-top: 220px;
+}
+
+/* Menu Burger - Tablette seulement */
+@media (max-width: 1024px) {
+  .mdt__specihead {
+    position: relative;
+    overflow: hidden; /* Préserve l'image de fond */
+  }
+
+  .mdt__specihead-back,
+  .mdt__specihead-back1,
+  .mdt__specihead-back2 {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover; /* Empêche la déformation */
+  }
+
+  .mdt__specihead-container {
+    position: relative;
+    right: 25px;
+    background: transparent; /* Fond transparent */
+  }
+
+  .mdt__specihead-container_links {
+    display: none;
+    position: fixed; /* Position fixe pour le menu */
+    top: 80px;
+    right: 20px;
+    background: var(--color-subtext);
+    padding: 20px;
+    flex-direction: column;
+    width: 200px;
+    z-index: 100;
+  }
+
+  .menu-burger {
+    display: block !important;
+    position: fixed;
+    top: 35px;
+    right: 18px;
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 101;
+    background: rgba(0,0,0,0.3);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mdt__specihead-container_links.show {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .mdt__specihead-container_links a {
+    margin: 10px 0;
+    color: white;
+    text-align: center;
+  }
+
+  .mdt__specihead-logo {
+    position: fixed;
+    left: 20px;
+    top: 20px;
+    z-index: 100;
+  }
+
+  .mdt__specihead-text {
+    position: relative;
+    margin-top: 50vh;
+    transform: translateY(-30%);
+    left: -10px;
+    font-size: 10px;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+/* Desktop - Cache le bouton burger */
+@media (min-width: 1025px) {
+  .menu-burger {
+    display: none !important;
+  }
+}
+
+/* Menu Burger - Mobile seulement */
+@media (max-width: 724px) { 
+
+  .mdt__specihead {
+    position: relative;
+    overflow: hidden; /* Préserve l'image de fond */
+  }
+
+  .mdt__specihead-back,
+  .mdt__specihead-back1,
+  .mdt__specihead-back2 {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover; /* Empêche la déformation */
+  }
+
+  .mdt__specihead-container {
+    position: relative;
+    right: 25px;
+    background: transparent; /* Fond transparent */
+  }
+
+  .mdt__specihead-container_links {
+    display: none;
+    position: fixed; /* Position fixe pour le menu */
+    top: 80px;
+    right: 55px;
+    background: var(--color-subtext);
+    padding: 20px;
+    flex-direction: column;
+    width: 200px;
+    z-index: 100;
+  }
+
+  .menu-burger {
+    display: block !important;
+    position: fixed;
+    top: 28px;
+    right: 50px;
+    background: none;
+    border: none;
+    color: #ffffff;
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 101;
+    background: rgba(0,0,0,0.3);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mdt__specihead-container_links.show {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .mdt__specihead-container_links a {
+    margin: 10px 0;
+    color: white;
+    text-align: center;
+  }
+
+  .mdt__specihead-logo {
+    position: fixed;
+    left: 20px;
+    top: 20px;
+    z-index: 100;
+  }
+
+  .mdt__specihead-text {
+    position: relative;
+    margin-top: 50vh;
+    transform: translateY(-30%);
+    left: -15px;
+    font-size: 5px;
+  }
+
+
+}

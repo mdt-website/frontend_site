@@ -1,0 +1,272 @@
+.pastor-container {
+    margin-top: 1000px;
+    padding: 40px 30px;
+    background-color:  #F0EEE7;
+    font-family: var(--font-family);
+    color: #221917;
+    line-height: 1.7;
+  }
+  
+  .pastor-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .pastor-title {
+    color: var(--color-subtext);
+    margin-bottom: 8px;
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 25.2px;  
+    letter-spacing: 6px;
+    text-align: center;
+
+  }
+  
+  .pastor-subtitle {
+    font-size: 16px;
+    font-family: var(--font-local);
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 66px;
+    letter-spacing: -1px;
+    text-align: center;
+    color: #221917;
+
+  }
+  
+  .pastor-quote {
+    background-color: #f8f9fa;
+    padding: 25px;
+    padding-bottom: 1px;
+    border-left: 5px solid var(--color-subtext);
+    margin: 0 0 30px 0;
+    font-size: 18px;
+  }
+  
+  .quote-text {
+    font-style: italic;
+  }
+  
+  .bible-verse {
+    text-align: right;
+    font-weight: bold;
+    color: var(--color-subtext);
+    margin-top: 15px;
+    font-size: 16px;
+  }
+  
+  .pastor-message-section {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 35px;
+  }
+  
+  .pastor-image-container {
+    flex: 0 0 260px;
+  }
+  
+  .pastor-image {
+    width: 400px;
+    height: auto;
+    object-fit: cover;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .message-content-wrapper {
+    flex: 0.9;
+    background-color: #fff;
+  }
+  
+  .message-title {
+    margin: 20px;
+    padding-bottom: 10px;
+    font-family: var(--font-local);
+    color: #221917;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 39px;
+    letter-spacing: -1px;
+    vertical-align: middle;
+
+  
+  }
+  
+  .message-content {
+    font-size: 16px;
+  }
+  
+  .message-content p {
+    margin: 10px;
+  }
+
+  .pastor-signature-block {
+    text-align: right;
+    margin-top: 10px;
+  }
+  
+  .signature-text {
+    font-style: italic;
+  }
+  
+  .blessing {
+    margin-bottom: 5px;
+  }
+  
+  .signature-name {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+  
+  
+  .hashtag {
+    color: var(--color-subtext);
+    font-size: 14px;
+  }
+  
+  .discover-button-container {
+    text-align: center;
+    margin-top: 30px;
+  }
+  
+  .discover-button {
+    margin-left: -305px;
+    padding: 12px 25px;
+    background-color: var(--color-subtext);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: var(--font-family);
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 27.2px;
+    letter-spacing: 0%;
+    text-align: center;
+
+  }
+  /* ==================== */
+/* MEDIA QUERIES TABLETTE (769px - 1024px) */
+/* ==================== */
+@media (max-width: 1024px) {
+  .pastor-container {
+    margin-top: 2px;
+    padding: 2rem;
+  }
+
+  .pastor-header {
+    text-align: center;
+  }
+
+  .pastor-message-section {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pastor-image-container {
+    margin-bottom: 2rem;
+    margin-left: 50px;
+    width: 100%;
+  }
+
+  .message-content-wrapper {
+    width: 100%;
+    padding: 0 1rem;
+  }
+
+  .message-title {
+    text-align: center;
+  }
+
+  .discover-button-container {
+    margin-left: 3px;
+    margin-bottom: 8px;
+    justify-content: center;
+    
+  }
+}
+
+/* ==================== */
+/* MEDIA QUERIES MOBILE (jusqu'à 768px) */
+/* ==================== */
+@media (max-width: 768px) {
+  .pastor-container {
+    margin-top: 2px;
+    padding: 1.5rem;
+  }
+
+  .pastor-title {
+    font-size: 2rem;
+    line-height: 2.2rem;
+  }
+
+  .pastor-subtitle {
+    font-size: 1rem;
+  }
+
+  .pastor-quote {
+    padding: 1.5rem;
+  }
+
+  .quote-text {
+    font-size: 1.1rem;
+  }
+
+  .pastor-image-container {
+    width: 100%;
+    margin-right: 80px;
+  }
+
+  .message-content p {
+    font-size: 0.95rem;
+    line-height: 1.6rem;
+  }
+
+  .discover-button {
+    margin-left: 3px;
+    margin-bottom: 8px;
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+/* ==================== */
+/* PETITS MOBILES (jusqu'à 480px) */
+/* ==================== */
+@media (max-width: 480px) {
+  .pastor-container {
+    margin-top: 2px;
+    padding: 1rem;
+  }
+
+  .pastor-title {
+    font-size: 1.8rem;
+    line-height: 2rem;
+  }
+
+  .pastor-quote {
+    padding: 1rem;
+  }
+
+  .quote-text {
+    font-size: 1rem;
+  }
+
+  .bible-verse {
+    font-size: 0.9rem;
+  }
+
+  .message-title {
+    font-size: 1.5rem;
+  }
+
+  .message-content p {
+    font-size: 0.9rem;
+  }
+
+  .signature-name, .hashtag {
+    font-size: 0.9rem;
+  }
+}

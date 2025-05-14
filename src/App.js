@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React from 'react'
 
 const App = () => {
@@ -12,28 +13,40 @@ const App = () => {
 export default App
 =======
 import logo from './logo.svg';
+=======
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from 'react-router-dom';
+>>>>>>> 694bf53 (Initial commit)
 import './App.css';
+import Home from './pages/home/Home';
+import About from './pages/about/About';
+import Sermon from './pages/sermon/Sermon';
+import Evenements from './pages/evenements/Evenements';
+import Ministry from './pages/ministry/Ministry';
+import Contact from './pages/contact/Contact';
+import Donate from './pages/donate/Donate';
+import NotFound from './pages/NotFound';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/sermon" element={<Sermon />} />
+        <Route path="/evenements" element={<Evenements />} />
+        <Route path="/ministry" element={<Ministry />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/donate" element={<Donate />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Router>
   );
-}
+};
 
 export default App;
 >>>>>>> b956708 (Initialize project using Create React App)
