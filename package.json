@@ -5,22 +5,12 @@
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
-
-    "@testing-library/react": "^16.2.0",
-    "@testing-library/user-event": "^13.5.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-<<<<<<< HEAD
->>>>>>> b956708 (Initialize project using Create React App)
-=======
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.6.0",
->>>>>>> 694bf53 (Initial commit)
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
