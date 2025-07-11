@@ -1,70 +1,71 @@
-*{
+/* Reset optimisé */
+* {
     box-sizing: border-box;
     padding: 0;
     margin: 0;
     scroll-behavior: smooth;
 }
 
-body{
+/* Désactive les animations si l'utilisateur préfère moins de mouvement */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        scroll-behavior: auto !important;
+        animation: none !important;
+    }
+}
+
+/* Améliorations du body */
+body {
     background: var(--color-bg);
+    -webkit-font-smoothing: antialiased; /* Lissage des polices sur Chrome/Safari */
+    text-rendering: optimizeLegibility; /* Meilleure lisibilité */
+    overflow-x: hidden; /* Empêche le débordement horizontal */
 }
 
-a{
-    color: unset; 
+/* Liens plus accessibles */
+a {
+    color: unset;
     text-decoration: none;
+    transition: opacity 0.2s ease; /* Micro-interaction légère */
+}
+a:hover {
+    opacity: 0.8; /* Effet hover subtil */
 }
 
-.section__padding{
+/* Classes de layout (inchangées) */
+.section__padding {
     padding: 4rem 6rem;
-
 }
-.section__margin{
+.section__margin {
     margin: 4rem 6rem;
-    
 }
 
- @-webkit-keyframes scale-up-center {
+/* Animation optimisée (moins gourmande) */
+@keyframes scale-up-center {
     0% {
-      -webkit-transform: scale(0.5);
-              transform: scale(0.5);
+        transform: scale(0.95); /* Démarrer à 0.95 au lieu de 0.5 pour moins de "jank" */
+        opacity: 0.9; /* Ajout d'un fade-in */
     }
     100% {
-      -webkit-transform: scale(1);
-              transform: scale(1);
+        transform: scale(1);
+        opacity: 1;
     }
-  }
-  @keyframes scale-up-center {
-    0% {
-      -webkit-transform: scale(0.5);
-              transform: scale(0.5);
-    }
-    100% {
-      -webkit-transform: scale(1);
-              transform: scale(1);
-    }
-  }
+}
+
+/* Responsive (inchangé) */
 @media screen and (max-width: 700px) {
-
-    .section__padding{
+    .section__padding {
         padding: 4rem;
-    
     }
-    .section__margin{
+    .section__margin {
         margin: 4rem;
-        
-    } 
-}
-
-
-@media screen and (max-width: 550px) {
-
-    .section__padding{
-        padding: 4rem 2rem;
-    
     }
-    .section__margin{
+}
+@media screen and (max-width: 550px) {
+    .section__padding {
+        padding: 4rem 2rem;
+    }
+    .section__margin {
         margin: 4rem 2rem;
-        
-    } 
-
-  }
+    }
+}

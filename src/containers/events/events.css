@@ -165,7 +165,6 @@
   background: linear-gradient(90deg, #E7CF84 0%, #B29A4F 100%);
 
 
-
 }
 
 .event-discover-button:hover {
@@ -241,7 +240,8 @@
 @media (min-width: 768px) and (max-width: 1024px) {
   .events-container {
     padding-left: 3rem !important;
-    padding-top: 10rem !important;
+    padding-top: 1rem !important;
+   
   }
 
   .section-title,

@@ -2,6 +2,8 @@
 .footer-container {
   width: 100%;
   padding: 0;
+  margin-top: 60px;
+  margin-bottom: 0;
   font-family: Arial, sans-serif;
 }
 
@@ -117,6 +119,7 @@
   flex-direction: column;
   max-width: 1200px;
   margin: 0 auto;
+  
 }
 
 .footer-links div { /* Remplace nav par div */
@@ -134,6 +137,7 @@
   font-family: var(--font-family);
   font-weight: 300;
   font-size: 16px;
+
   line-height: 16px;
   letter-spacing: 0%;
 
@@ -220,6 +224,7 @@
 /* =================== */
 @media (min-width: 769px) and (max-width: 1024px) {
   .principale {
+    margin-top: 50px;
     padding: 3rem 4rem;
     padding-left: 4rem;
   }

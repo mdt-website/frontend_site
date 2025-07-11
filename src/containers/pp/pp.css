@@ -1,0 +1,131 @@
+/* Styles généraux */
+.pp-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Georgia', serif;
+  }
+  
+  .pp-section {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 60px;
+    align-items: flex-start;
+  }
+  
+  /* Groupe d'images */
+  .pp-image-group {
+    flex: 0 0 45%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .pp-main-image {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border: 8px solid white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transform: rotate(-2deg);
+  }
+  
+  .pp-secondary-images {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .pp-secondary-image {
+    width: 50%;
+    height: 180px;
+    object-fit: cover;
+    border: 5px solid white;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+  }
+  
+  .pp-secondary-image:first-child {
+    transform: rotate(3deg);
+  }
+  
+  .pp-secondary-image:last-child {
+    transform: rotate(-1deg);
+  }
+  
+  /* Contenu texte */
+  .pp-text-content {
+    flex: 1;
+    padding-top: 20px;
+  }
+  
+  .pp-text-content h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 400;
+  }
+  
+  .pp-text-content h3 {
+    font-size: 1.5rem;
+    color: #8e7037;
+    margin-bottom: 15px;
+    font-weight: 600;
+  }
+  
+  .pp-text {
+    line-height: 1.8;
+    color: #555;
+    margin-bottom: 25px;
+  }
+  
+  .pp-text p {
+    margin: 0;
+  }
+  
+  .pp-button {
+    background-color: #8e7037;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  
+  .pp-button:hover {
+    background-color: #6d5629;
+    transform: translateY(-2px);
+  }
+  
+  /* Styles spécifiques pour la section principale */
+  .pp-principal .pp-main-image {
+    transform: rotate(2deg);
+  }
+  
+  /* Responsive */
+  @media (max-width: 992px) {
+    .pp-section {
+      flex-direction: column;
+    }
+    
+    .pp-image-group {
+      width: 100%;
+    }
+    
+    .pp-main-image {
+      height: 350px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .pp-secondary-images {
+      flex-direction: column;
+    }
+    
+    .pp-secondary-image {
+      width: 100%;
+    }
+  }

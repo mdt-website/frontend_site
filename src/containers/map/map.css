@@ -1,0 +1,16 @@
+.map-iframe {
+    width: 100vw; /* prend toute la largeur de la fenêtre */
+    padding: 0;
+    margin: 0;
+    margin-bottom: 80px;
+    box-sizing: border-box;
+  }
+  
+  .map-iframe iframe {
+    width: 100%;
+    height: 450px;
+    border: 0;
+    border-radius: 0; /* plus de coin arrondi si tu veux un bord plein */
+    box-shadow: none; /* supprime l’ombre si tu veux du bord à bord propre */
+  }
+  

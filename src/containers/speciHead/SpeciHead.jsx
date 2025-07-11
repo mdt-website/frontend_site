@@ -16,7 +16,9 @@ const SpeciHead = () => {
         <img src={fond2} alt="back2"  className="mdt__specihead-back2"/>
       </div>
       <div className="mdt__specihead-logo">
-        <img src={logo} alt="logo" className="mdt__specihead-logo " />
+         <Link to="/">
+          <img src={logo} alt="logo" className="mdt__specihead-logo " />
+        </Link>
       </div>      
       <div className="mdt__specihead-container">
 

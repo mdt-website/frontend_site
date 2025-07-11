@@ -12,7 +12,7 @@ const Events = () => {
       day: "26",
       month: "Juillet 2025",
       title: "Classe Basic Niveau I & 2",
-      time: "19:30",
+      time: "19:30 GMT+1",
       location: "AP Guy-Valery & AP Nikè",
     },
     {
@@ -20,7 +20,7 @@ const Events = () => {
       day: "27",
       month: "Juillet 2025",
       title: "Mercredi de Gloire",
-      time: "19:30",
+      time: "19:30 GMT+1",
       location: "Pst HDM",
     },
     {
@@ -28,7 +28,7 @@ const Events = () => {
       day: "28",
       month: "Juillet 2025",
       title: "Veillée des célibataires (partie 3)",
-      time: "20:30",
+      time: "20:30 GMT+1",
       location: "Pst HDM",
     },
     {
@@ -36,7 +36,7 @@ const Events = () => {
       day: "01",
       month: "Aout 2025",
       title: "Rencontre des femmes missionnaires",
-      time: "18:30",
+      time: "18:30 GMT+1",
       location: "AP Audrey & AP Nikè",
     },
   ]);
