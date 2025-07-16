@@ -12,6 +12,13 @@
     padding: 25px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    font-family: var( --font-local);
+    font-weight: 400;
+    font-style: Regular;  
+    font-size: 18px;
+    line-height: 36px;
+    letter-spacing: 0%;
+
   }
   
   .info-content p {
@@ -22,6 +29,12 @@
     color: #2c3e50;
     margin: 25px 0 15px 0;
     font-size: 1.2em;
+    font-family: var( --font-local);
+    font-weight: 400;
+    font-style: Regular;  
+    font-size: 35px;
+    line-height: 36px;
+    letter-spacing: 0%;
   }
   
   .about-info {
@@ -30,12 +43,19 @@
     background-color: #e8f4fc;
     border-left: 4px solid #3498db;
     border-radius: 4px;
+
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-style: Medium;
+    font-size: 14px;
+    letter-spacing: 0%;
+    vertical-align: middle;
+
   }
   
   .phone-number {
     font-weight: bold;
     font-size: 1.2em;
-    color: #2c3e50;
     margin-top: 10px;
   }
   

@@ -87,7 +87,7 @@
   }
   
   .genese-title {
-    font-size: 1.8rem;
+    font-size: 3rem;
     font-weight: 400;
     font-family: "Cormorant Infant", serif;
     color: var(--color-text);
@@ -139,7 +139,7 @@
     .video-container {
       max-width: 90%;
     }
-      
+    
     .img-left {
         bottom: 550px;
         left: 45px;
@@ -168,7 +168,7 @@
       margin-bottom: 1rem;
     }
     .img-left {
-        bottom: 345px;
+        bottom: 330px;
         left: 30px;
       }
       

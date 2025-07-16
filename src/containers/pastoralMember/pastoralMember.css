@@ -1,0 +1,200 @@
+.pastoralMember-section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    font-family: var(--font-local);
+  }
+  
+  .pastoralMember-title {
+    text-align: center;
+    margin: 50px;
+    font-family: var(--font-family);
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 20px;
+    color: var(--color-subtext);
+    line-height: 25.2px;
+    letter-spacing: 7px;
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  .pastoralMember-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+  
+  .pastoralMember-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  
+  .pastoralMember-content {
+    display: flex;
+    gap: 3rem;
+    align-items: flex-start;
+  }
+  
+  .pastoralMember-image-container {
+    flex: 1;
+    position: relative;
+    min-height: 400px;
+  }
+  
+  .pastoralMember-img-main {
+    width: 100%;
+    height: 600px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .pastoralMember-img-thumbnail {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 40%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border: 4px solid white;
+    z-index: 2;
+    transform: rotate(5deg);
+  }
+  
+  .pastoralMember-text {
+    flex: 1;
+  }
+  
+  .pastoralMember-header {
+    text-align: left;
+    margin-bottom: 2rem;
+  }
+  
+  .pastoralMember-role {
+    color: var(--color-subtext);
+    text-transform: uppercase;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-family: var(--font-family);
+    font-weight: 600;
+    font-style: SemiBold;
+    font-size: 18px;
+    line-height: 23.4px;
+    letter-spacing: 1px;
+    vertical-align: middle;
+  }
+  
+  .pastoralMember-name {
+    color: var(--color-about);
+    margin-bottom: 0.5rem;
+    font-family: var(--font-local);
+    font-weight: 400;
+    font-style: Regular;
+    font-size: 40px;
+    line-height: 59.4px;
+    letter-spacing: -0.6px;
+    vertical-align: middle;
+  }
+  
+  .pastoralMember-description {
+    color: var(--color-about);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-style: Medium;
+    line-height: 34px;
+    letter-spacing: 0%;
+    vertical-align: middle;
+  }
+  
+  .pastoralMember-description p {
+    margin: 0;
+    padding: 0;
+  }
+  
+  @media (min-width: 800px) and (max-width: 1100px) {
+    .pastoralMember-title {
+      width: 100%;
+      margin-left: 0;
+      font-size: 1.5rem;
+    }
+    
+    .pastoralMember-description{
+      width: 100%;
+      font-size: 1.8rem;
+    }
+    
+    .pastoralMember-image-container {
+      width: 100%;
+      min-height: 350px;
+    }
+    
+    .pastoralMember-img-main {
+      height: 700px;
+    }
+    
+    .pastoralMember-img-thumbnail {
+      width: 40%;
+      height: 350px;
+      transform: rotate(8deg);
+    }
+  }
+  
+  @media (min-width: 400px) and (max-width: 790px) {
+    .pastoralMember-title {
+      margin-left: 0;
+      width: 100%;
+      font-size: 1rem;
+      margin-bottom: 2rem;
+    }
+  
+    .pastoralMember-img-main {
+      height: 500px;
+    }
+    
+    .pastoralMember-img-thumbnail {
+      width: 40%;
+      height: 150px;
+      bottom: -15px;
+      right: -15px;
+    }
+  
+    .pastoralMember-name {
+      font-size: 1.6rem;
+    }
+  
+    .pastoralMember-description {
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .pastoralMember-title {
+      font-size: 1.5rem;
+    }
+  
+    .pastoralMember-card {
+      padding: 1.5rem;
+    }
+  
+    .pastoralMember-name {
+      font-size: 1.4rem;
+    }
+  
+    .pastoralMember-role {
+      font-size: 1rem;
+    }
+    
+    .pastoralMember-img-thumbnail {
+      width: 45%;
+      height: 120px;
+      bottom: -10px;
+      right: -10px;
+    }
+  }

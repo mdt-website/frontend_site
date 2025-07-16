@@ -5,6 +5,7 @@ import ContactAbout from '../../containers/contactabout/Contactabout'
 import Discover from '../../containers/discover/Discover'
 import Info from '../../containers/info/Info'
 import Pp from '../../containers/pp/Pp'
+
 const About = () => {
   return (
     <div>

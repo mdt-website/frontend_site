@@ -14,6 +14,7 @@ import Ministry from './pages/ministry/Ministry';
 import Contact from './pages/contact/Contact';
 import Donate from './pages/donate/Donate';
 import NotFound from './pages/NotFound';
+import Detailpastoral from './pages/detailpastoral/Detailpastoral'
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
         <Route path="/contact" element={<Contact />} />
         <Route path="/donate" element={<Donate />} />
         <Route path="*" element={<NotFound />} />
+        <Route path="/detailpastoral" element={<Detailpastoral />} />
       </Routes>
     </Router>
   );

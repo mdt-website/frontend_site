@@ -6,7 +6,7 @@ import  './events.css';
 
 const Events = () => {
   // Données des événements (peuvent venir d'une API ou props)
-  const [events, setEvents] = useState([
+  const [events] = useState([
     {
       id: 1,
       day: "26",
