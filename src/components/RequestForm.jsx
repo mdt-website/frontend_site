@@ -7,6 +7,7 @@ export default function RequestForm({ type, fields, submitLabel = 'Envoyer', suc
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle');
   const [serverError, setServerError] = useState('');
+  const [hp, setHp] = useState(''); // champ piège anti-spam
   const set = (n, v) => setValues((s) => ({ ...s, [n]: v }));
 
   const validate = () => {
@@ -26,7 +27,7 @@ export default function RequestForm({ type, fields, submitLabel = 'Envoyer', suc
     if (!validate()) return;
     setStatus('sending');
     try {
-      const res = await fetch('/api/requests', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type, ...values }) });
+      const res = await fetch('/api/requests', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type, ...values, website: hp }) });
       if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || 'Envoi impossible, veuillez réessayer.');
       setStatus('done');
     } catch (err) { setServerError(err.message); setStatus('error'); }
@@ -40,6 +41,7 @@ export default function RequestForm({ type, fields, submitLabel = 'Envoyer', suc
     const f = fields[0];
     return (
       <form className="mail" onSubmit={onSubmit} noValidate>
+        <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" value={hp} onChange={(e) => setHp(e.target.value)} style={{ position: 'absolute', left: '-9999px', width: 1, height: 1 }} />
         <input type={f.type} placeholder={f.label} aria-label={f.label} value={values[f.name] || ''} onChange={(e) => set(f.name, e.target.value)} />
         <button className="btn" disabled={status === 'sending'}>{submitLabel}</button>
         {(errors[f.name] || status === 'error') && <span className="err">{errors[f.name] || serverError}</span>}
@@ -49,6 +51,7 @@ export default function RequestForm({ type, fields, submitLabel = 'Envoyer', suc
 
   return (
     <form className="form" onSubmit={onSubmit} noValidate>
+      <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" value={hp} onChange={(e) => setHp(e.target.value)} style={{ position: 'absolute', left: '-9999px', width: 1, height: 1 }} />
       {fields.map((f) => (
         <div className={`form__row ${f.type === 'checkbox' ? 'form__check' : ''}`} key={f.name}>
           {f.type === 'checkbox' ? (

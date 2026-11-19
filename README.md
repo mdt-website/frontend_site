@@ -1,70 +1,44 @@
-# Getting Started with Create React App
+# La Maison de la Transformation (MDT)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Site web et back-office (CRM) de l'église, Abomey-Calavi, Bénin. Next.js 16 (App Router), Prisma, SQLite en local (PostgreSQL possible en production).
 
-## Available Scripts
+Structure et choix issus de l'audit de joincci.org : voir [docs/AUDIT_CCI.md](docs/AUDIT_CCI.md).
 
-In the project directory, you can run:
+## Démarrage
 
-### `npm start`
+```bash
+npm install
+npm run db:setup   # crée .env.local, la base, et le compte administrateur
+npm run dev
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+`db:setup` génère `.env.local` (non versionné) avec un secret de session et un mot de passe administrateur initial (variable `ADMIN_INITIAL_PASSWORD`). Connectez-vous sur `/admin`, puis changez-le dans « Mon compte ».
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Tests : `npm test`.
 
-### `npm test`
+## Variables d'environnement
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+| Variable | Rôle |
+| --- | --- |
+| `DATABASE_URL` | Base de données (`file:./dev.db` en local) |
+| `SESSION_SECRET` | Clé de signature des sessions, 32 caractères minimum |
+| `ADMIN_EMAIL`, `ADMIN_INITIAL_PASSWORD` | Compte administrateur créé par `db:setup` |
+| `NEXT_PUBLIC_SITE_URL` | URL publique (SEO, sitemap) |
+| `NOTIFY_WEBHOOK_URL` | Optionnel : webhook appelé à chaque nouvelle demande |
 
-### `npm run build`
+## Ce qui est en place
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- **Formulaires publics** (`/api/requests`) : validation, anti-spam (champ piège + limite par IP), création automatique de la fiche personne (dédoublonnage par téléphone puis email), abonnement newsletter.
+- **Back-office** (`/admin`) : tableau de bord, demandes (statut, responsable, notes de suivi), personnes, dons annoncés, abonnés, sermons, événements, cultes et présence, utilisateurs, exports CSV.
+- **Rôles** : `ADMIN` (tout), `PASTOR` (contenus, demandes confidentielles, dons), `LEADER` (demandes non confidentielles, personnes). Les demandes de prière, conseil, aide sociale et les dons sont masqués aux responsables.
+- **Pointage** (`/checkin`) : un code à 4 chiffres par culte, les fidèles signalent leur présence.
+- **Pages publiques** `/sermons` et `/events` alimentées par la base.
+- Sécurité : mots de passe scrypt, cookie de session signé httpOnly, limitation des tentatives de connexion, neutralisation des formules dans les exports CSV.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Passer à PostgreSQL
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Dans `prisma/schema.prisma`, remplacer `provider = "sqlite"` par `"postgresql"`, renseigner `DATABASE_URL`, puis `npx prisma db push`. La limitation de débit est en mémoire : avec plusieurs instances, la déplacer vers un stockage partagé.
 
-### `npm run eject`
+## À fournir par l'église
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Témoignages, coordonnées de don, mot du pasteur, histoire, déclaration de foi, dates d'événements, liens App Store / Google Play (`SITE.apps` dans `src/lib/site.js`).

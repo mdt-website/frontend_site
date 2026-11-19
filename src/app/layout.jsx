@@ -2,6 +2,7 @@ import { Plus_Jakarta_Sans } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import Chrome from '@/components/Chrome';
 
 const jakarta = Plus_Jakarta_Sans({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800'], variable: '--font-body', display: 'swap' });
 
@@ -22,9 +23,7 @@ export default function RootLayout({ children }) {
     <html lang="fr" className={jakarta.variable}>
       <body>
         <a href="#contenu" className="skip">Aller au contenu</a>
-        <Navbar />
-        <main id="contenu">{children}</main>
-        <Footer />
+        <Chrome nav={<Navbar />} footer={<Footer />}>{children}</Chrome>
       </body>
     </html>
   );

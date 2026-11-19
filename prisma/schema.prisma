@@ -1,0 +1,129 @@
+// Pour passer en production sur PostgreSQL : provider = "postgresql" et DATABASE_URL vers la base.
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Rôles : ADMIN (tout), PASTOR (CRM + contenus), LEADER (consultation et suivi des demandes)
+model User {
+  id           String    @id @default(cuid())
+  email        String    @unique
+  name         String
+  passwordHash String
+  role         String    @default("LEADER")
+  active       Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  lastLoginAt  DateTime?
+  requests     Request[] @relation("AssignedTo")
+}
+
+// Contact du CRM : créé ou mis à jour automatiquement à chaque formulaire
+model Person {
+  id         String       @id @default(cuid())
+  name       String
+  phone      String?
+  email      String?
+  quarter    String?
+  source     String?
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  requests   Request[]
+  donations  Donation[]
+  attendance Attendance[]
+
+  @@index([phone])
+  @@index([email])
+}
+
+// Demande reçue par un formulaire (prière, membre, conseil, aide sociale…)
+// status : NEW | IN_PROGRESS | DONE | ARCHIVED
+model Request {
+  id           String   @id @default(cuid())
+  type         String
+  status       String   @default("NEW")
+  data         String   // JSON des champs du formulaire
+  notes        String?
+  personId     String?
+  person       Person?  @relation(fields: [personId], references: [id], onDelete: SetNull)
+  assignedToId String?
+  assignedTo   User?    @relation("AssignedTo", fields: [assignedToId], references: [id], onDelete: SetNull)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([type, status])
+  @@index([createdAt])
+}
+
+model Subscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
+
+// status : ANNOUNCED | CONFIRMED | REJECTED
+model Donation {
+  id        String   @id @default(cuid())
+  nature    String
+  amount    Int?
+  method    String?
+  status    String   @default("ANNOUNCED")
+  personId  String?
+  person    Person?  @relation(fields: [personId], references: [id], onDelete: SetNull)
+  createdAt DateTime @default(now())
+}
+
+model Sermon {
+  id        String   @id @default(cuid())
+  title     String
+  speaker   String
+  date      DateTime
+  tags      String   @default("") // séparés par des virgules
+  url       String   // lien YouTube / vidéo
+  audioUrl  String?
+  published Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@index([date])
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  startsAt    DateTime
+  location    String?
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  @@index([startsAt])
+}
+
+// Culte avec code de présence à 4 chiffres
+model Service {
+  id         String       @id @default(cuid())
+  title      String
+  date       DateTime
+  code       String
+  open       Boolean      @default(true)
+  createdAt  DateTime     @default(now())
+  attendance Attendance[]
+
+  @@index([code, open])
+}
+
+model Attendance {
+  id        String   @id @default(cuid())
+  serviceId String
+  service   Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+  personId  String?
+  person    Person?  @relation(fields: [personId], references: [id], onDelete: SetNull)
+  name      String
+  phone     String?
+  createdAt DateTime @default(now())
+
+  @@unique([serviceId, phone])
+}
