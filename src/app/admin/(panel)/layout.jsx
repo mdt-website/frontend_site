@@ -1,39 +1,48 @@
-import Link from 'next/link';
 import { requireUser } from '@/lib/auth';
 import { can, ROLES } from '@/lib/crm';
 import { logout } from '../actions';
+import AdminNav from './AdminNav';
 import '../admin.css';
 
-export const metadata = { title: 'Back-office', robots: { index: false, follow: false } };
+export const metadata = { title: { default: 'Back-office', template: '%s · Back-office' }, robots: { index: false, follow: false } };
 export const dynamic = 'force-dynamic';
 
 export default async function PanelLayout({ children }) {
   const user = await requireUser();
+  const content = can.manageContent(user);
+  const groups = [
+    { items: [{ href: '/admin', label: 'Tableau de bord', icon: 'home' }] },
+    { title: 'CRM', items: [
+      { href: '/admin/requests', label: 'Demandes', icon: 'inbox' },
+      { href: '/admin/people', label: 'Personnes', icon: 'users' },
+      ...(can.seeDonations(user) ? [{ href: '/admin/donations', label: 'Dons', icon: 'gift' }] : []),
+      { href: '/admin/subscribers', label: 'Abonnés', icon: 'mail' },
+    ] },
+    { title: 'Église', items: [
+      { href: '/admin/services', label: 'Cultes et présence', icon: 'check' },
+      ...(content ? [
+        { href: '/admin/sermons', label: 'Sermons', icon: 'mic' },
+        { href: '/admin/events', label: 'Événements', icon: 'cal' },
+        { href: '/admin/courses', label: 'Formation', icon: 'book' },
+        { href: '/admin/certificates', label: 'Certificats', icon: 'award' },
+      ] : []),
+    ] },
+    { title: 'Administration', items: [
+      ...(can.manageUsers(user) ? [{ href: '/admin/users', label: 'Utilisateurs', icon: 'shield' }] : []),
+      { href: '/admin/account', label: 'Mon compte', icon: 'user' },
+      { href: '/', label: 'Voir le site', icon: 'globe', external: true },
+    ] },
+  ];
+  const initials = String(user.name || '?').split(/\s+/).map((w) => w[0]).slice(0, 2).join('').toUpperCase();
   return (
     <div className="adm">
       <aside className="adm__side">
-        <div className="adm__brand"><img src="/img/logo.png" alt="" /> Back-office</div>
-        <nav className="adm__nav" aria-label="Back-office">
-          <Link href="/admin">Tableau de bord</Link>
-          <h6>CRM</h6>
-          <Link href="/admin/requests">Demandes</Link>
-          <Link href="/admin/people">Personnes</Link>
-          {can.seeDonations(user) && <Link href="/admin/donations">Dons</Link>}
-          <Link href="/admin/subscribers">Abonnés</Link>
-          <h6>Église</h6>
-          <Link href="/admin/services">Cultes et présence</Link>
-          {can.manageContent(user) && <Link href="/admin/sermons">Sermons</Link>}
-          {can.manageContent(user) && <Link href="/admin/events">Événements</Link>}
-          {can.manageContent(user) && <Link href="/admin/courses">Formation</Link>}
-          {can.manageContent(user) && <Link href="/admin/certificates">Certificats</Link>}
-          <h6>Compte</h6>
-          {can.manageUsers(user) && <Link href="/admin/users">Utilisateurs</Link>}
-          <Link href="/admin/account">Mon compte</Link>
-          <Link href="/" target="_blank">Voir le site</Link>
-        </nav>
+        <div className="adm__brand"><img src="/img/logo.png" alt="" /><span>Maison de la<br />Transformation</span></div>
+        <AdminNav groups={groups} />
         <div className="adm__user">
-          <strong>{user.name}</strong>{ROLES[user.role]}
-          <form action={logout} style={{ marginTop: '.6rem' }}><button className="adm__btn adm__btn--ghost adm__btn--sm">Déconnexion</button></form>
+          <span className="adm__avatar" aria-hidden="true">{initials}</span>
+          <div><strong>{user.name}</strong><small>{ROLES[user.role]}</small></div>
+          <form action={logout}><button className="adm__out" title="Se déconnecter" aria-label="Se déconnecter">⏻</button></form>
         </div>
       </aside>
       <main className="adm__main">{children}</main>

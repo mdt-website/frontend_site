@@ -14,7 +14,7 @@ export default async function Subscribers() {
       <div className="adm__scroll"><table>
         <thead><tr><th>Email</th><th>Inscrit le</th><th /></tr></thead>
         <tbody>
-          {rows.length === 0 && <tr><td colSpan={3}>Aucun abonné.</td></tr>}
+          {rows.length === 0 && <tr><td colSpan={3} className="adm__empty">Aucun abonné.</td></tr>}
           {rows.map((s) => (
             <tr key={s.id}><td>{s.email}</td><td>{fmtDate(s.createdAt)}</td>
               <td>{can.manageContent(user) && <form action={deleteSubscriber}><input type="hidden" name="id" value={s.id} /><button className="adm__btn adm__btn--ghost adm__btn--sm">Retirer</button></form>}</td></tr>

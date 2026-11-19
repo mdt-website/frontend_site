@@ -28,7 +28,7 @@ export default async function Services({ searchParams }) {
       <div className="adm__scroll"><table>
         <thead><tr><th>Date</th><th>Culte</th><th>Lieu</th><th>Code</th><th>Présents</th><th>État</th><th /></tr></thead>
         <tbody>
-          {rows.length === 0 && <tr><td colSpan={7}>Aucun culte.</td></tr>}
+          {rows.length === 0 && <tr><td colSpan={7} className="adm__empty">Aucun culte.</td></tr>}
           {rows.map((s) => (
             <tr key={s.id}>
               <td>{fmtDateTime(s.date)}</td><td>{s.title}</td><td>{CAMPUSES[s.campus]?.name || s.campus}</td>

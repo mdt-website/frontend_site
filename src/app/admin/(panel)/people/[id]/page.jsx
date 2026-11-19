@@ -25,19 +25,19 @@ export default async function PersonDetail({ params }) {
       </dl></div>
       <h2>Demandes ({requests.length})</h2>
       <div className="adm__scroll"><table><thead><tr><th>Date</th><th>Type</th><th>Statut</th></tr></thead><tbody>
-        {requests.length === 0 && <tr><td colSpan={3}>Aucune.</td></tr>}
+        {requests.length === 0 && <tr><td colSpan={3} className="adm__empty">Aucune.</td></tr>}
         {requests.map((r) => <tr key={r.id}><td>{fmtDateTime(r.createdAt)}</td><td><Link href={`/admin/requests/${r.id}`}>{REQUEST_TYPES[r.type]}</Link></td><td><span className={`badge badge--${r.status}`}>{STATUS[r.status]}</span></td></tr>)}
       </tbody></table></div>
       {can.seeDonations(user) && <>
         <h2>Dons ({p.donations.length})</h2>
         <div className="adm__scroll"><table><thead><tr><th>Date</th><th>Nature</th><th>Montant</th><th>Statut</th></tr></thead><tbody>
-          {p.donations.length === 0 && <tr><td colSpan={4}>Aucun.</td></tr>}
+          {p.donations.length === 0 && <tr><td colSpan={4} className="adm__empty">Aucun.</td></tr>}
           {p.donations.map((d) => <tr key={d.id}><td>{fmtDate(d.createdAt)}</td><td>{d.nature}</td><td>{d.amount != null ? `${d.amount.toLocaleString('fr-FR')} FCFA` : '—'}</td><td><span className={`badge badge--${d.status}`}>{DONATION_STATUS[d.status]}</span></td></tr>)}
         </tbody></table></div>
       </>}
       <h2>Présences ({p.attendance.length})</h2>
       <div className="adm__scroll"><table><thead><tr><th>Culte</th><th>Date</th></tr></thead><tbody>
-        {p.attendance.length === 0 && <tr><td colSpan={2}>Aucune.</td></tr>}
+        {p.attendance.length === 0 && <tr><td colSpan={2} className="adm__empty">Aucune.</td></tr>}
         {p.attendance.map((a) => <tr key={a.id}><td>{a.service.title}</td><td>{fmtDate(a.service.date)}</td></tr>)}
       </tbody></table></div>
     </>

@@ -29,7 +29,7 @@ export default async function People({ searchParams }) {
         <table>
           <thead><tr><th>Nom</th><th>Téléphone</th><th>Email</th><th>Quartier</th><th>Demandes</th><th>Présences</th><th>Depuis</th></tr></thead>
           <tbody>
-            {rows.length === 0 && <tr><td colSpan={7}>Aucune personne.</td></tr>}
+            {rows.length === 0 && <tr><td colSpan={7} className="adm__empty">Aucune personne.</td></tr>}
             {rows.map((p) => (
               <tr key={p.id}>
                 <td><Link href={`/admin/people/${p.id}`}>{p.name}</Link></td><td>{p.phone}</td><td>{p.email}</td><td>{p.quarter}</td>

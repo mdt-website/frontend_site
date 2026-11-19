@@ -15,7 +15,7 @@ export default async function EventsAdmin() {
       <div className="adm__scroll"><table>
         <thead><tr><th>Date</th><th>Titre</th><th>Lieu</th><th>Publié</th><th /></tr></thead>
         <tbody>
-          {rows.length === 0 && <tr><td colSpan={5}>Aucun événement.</td></tr>}
+          {rows.length === 0 && <tr><td colSpan={5} className="adm__empty">Aucun événement.</td></tr>}
           {rows.map((e) => (
             <tr key={e.id}><td>{fmtDateTime(e.startsAt)}</td><td><Link href={`/admin/events/${e.id}`}>{e.title}</Link></td><td>{e.location}</td><td>{e.published ? 'Oui' : 'Non'}</td>
               <td><form action={deleteEvent}><input type="hidden" name="id" value={e.id} /><button className="adm__btn adm__btn--danger adm__btn--sm">Supprimer</button></form></td></tr>

@@ -22,7 +22,7 @@ export default async function Courses({ searchParams }) {
       <div className="adm__scroll"><table>
         <thead><tr><th>Parcours</th><th>Leçons</th><th>Inscrits</th><th>État</th></tr></thead>
         <tbody>
-          {rows.length === 0 && <tr><td colSpan={4}>Aucun parcours.</td></tr>}
+          {rows.length === 0 && <tr><td colSpan={4} className="adm__empty">Aucun parcours.</td></tr>}
           {rows.map((c) => (
             <tr key={c.id}>
               <td><Link href={`/admin/courses/${c.id}`}>{c.title}</Link></td><td>{c._count.lessons}</td><td>{c._count.enrollments}</td>

@@ -33,6 +33,7 @@ export default async function Requests({ searchParams }) {
   return (
     <>
       <h1>Demandes</h1>
+      <p className="adm__sub">{total} demande(s) — filtrez par type, lieu ou statut.</p>
       <form className="adm__filters" method="get">
         <select name="type" defaultValue={type}><option value="">Tous les types</option>{Object.entries(REQUEST_TYPES).map(([k, v]) => <option key={k} value={k}>{v}</option>)}</select>
         <select name="campus" defaultValue={campus}><option value="">Tous les lieux</option>{CAMPUS_LIST.map((c) => <option key={c.slug} value={c.slug}>{c.name}</option>)}</select>
@@ -45,7 +46,7 @@ export default async function Requests({ searchParams }) {
         <table>
           <thead><tr><th>Date</th><th>Type</th><th>Lieu</th><th>Personne</th><th>Contact</th><th>Responsable</th><th>Statut</th></tr></thead>
           <tbody>
-            {rows.length === 0 && <tr><td colSpan={6}>Aucune demande.</td></tr>}
+            {rows.length === 0 && <tr><td colSpan={7} className="adm__empty">Aucune demande.</td></tr>}
             {rows.map((r) => (
               <tr key={r.id}>
                 <td>{fmtDateTime(r.createdAt)}</td>

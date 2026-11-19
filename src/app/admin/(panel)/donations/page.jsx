@@ -17,7 +17,7 @@ export default async function Donations() {
       <div className="adm__scroll"><table>
         <thead><tr><th>Date</th><th>Personne</th><th>Nature</th><th>Montant</th><th>Moyen</th><th>Statut</th><th /></tr></thead>
         <tbody>
-          {rows.length === 0 && <tr><td colSpan={7}>Aucun don annoncé.</td></tr>}
+          {rows.length === 0 && <tr><td colSpan={7} className="adm__empty">Aucun don annoncé.</td></tr>}
           {rows.map((d) => (
             <tr key={d.id}>
               <td>{fmtDateTime(d.createdAt)}</td>

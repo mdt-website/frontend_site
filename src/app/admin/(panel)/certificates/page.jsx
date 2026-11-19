@@ -21,7 +21,7 @@ export default async function Certificates() {
       <div className="adm__scroll"><table>
         <thead><tr><th>Date</th><th>Nom</th><th>Formation</th><th>Code</th><th>Email</th></tr></thead>
         <tbody>
-          {issued.length === 0 && <tr><td colSpan={5}>Aucun certificat.</td></tr>}
+          {issued.length === 0 && <tr><td colSpan={5} className="adm__empty">Aucun certificat.</td></tr>}
           {issued.map((c) => <tr key={c.id}><td>{fmtDate(c.issuedOn)}</td><td>{c.name}</td><td>{c.title}</td><td><a href={`/certificat/${c.code}`} target="_blank" rel="noopener noreferrer">{c.code}</a></td><td>{c.sentAt ? 'Envoyé' : '—'}</td></tr>)}
         </tbody>
       </table></div>
