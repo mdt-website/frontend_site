@@ -19,6 +19,7 @@ export const REQUEST_TYPES = {
   testimony: 'Témoignage',
   contact: 'Message de contact',
   donation: 'Don annoncé',
+  event_register: 'Inscription à un événement',
 };
 
 export const STATUS = { NEW: 'Nouvelle', IN_PROGRESS: 'En cours', DONE: 'Traitée', ARCHIVED: 'Archivée' };
@@ -39,6 +40,6 @@ export const FIELD_LABELS = {
   nom: 'Nom', telephone: 'Téléphone', email: 'Email', quartier: 'Quartier', bapteme: 'Baptisé(e)', sujet: 'Sujet',
   confidentiel: 'Confidentiel', connu: 'Comment nous a connus', message: 'Message', ville: 'Ville / Pays',
   categorie: 'Catégorie', partenaire: 'Fiancé(e)', date: 'Date', conjoint: 'Conjoint(e)', besoin: 'Besoin',
-  ministere: 'Ministère', publier: 'Publication autorisée', zone: 'Quartier', jour: 'Jour et heure', evenement: 'Célébration',
+  ministere: 'Ministère', publier: 'Publication autorisée', zone: 'Quartier', jour: 'Jour et heure', evenement: 'Événement / célébration', personnes: 'Nombre de personnes',
   classe: 'Classe', nature: 'Nature', montant: 'Montant', moyen: 'Moyen', accord: 'Consentement',
 };

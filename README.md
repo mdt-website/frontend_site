@@ -35,6 +35,17 @@ Tests : `npm test`.
 - **Pages publiques** `/sermons` et `/events` alimentées par la base.
 - Sécurité : mots de passe scrypt, cookie de session signé httpOnly, limitation des tentatives de connexion, neutralisation des formules dans les exports CSV.
 
+## Sous-domaines et plateforme
+
+- **Trois lieux** : `calavi.`, `cotonou.`, `lome.` : mini-site de chaque lieu ; le lieu est enregistré avec chaque demande, personne et culte (filtre dans le back-office).
+- **Pointage** : `app.` + image du code à projeter (paysage ou portrait, avec QR) depuis « Cultes et présence ».
+- **Formation en ligne** : `lms.` : comptes apprenants, parcours, leçons vidéo YouTube + texte, progression ; gestion dans « Formation ».
+- **Certificats** : « Certificats » : émission en lot, page publique de vérification `/certificat/<code>`, envoi par email si `SMTP_URL` est configuré.
+- **Visuels d'événement** : `dp.` : photo + nom sur un visuel, composé dans le navigateur (aucune photo envoyée au serveur).
+- **Événements** : page détail et inscription par événement.
+
+Déploiement : voir [docs/DEPLOIEMENT.md](docs/DEPLOIEMENT.md) (VPS Contabo + Cloudflare).
+
 ## Passer à PostgreSQL
 
 Dans `prisma/schema.prisma`, remplacer `provider = "sqlite"` par `"postgresql"`, renseigner `DATABASE_URL`, puis `npx prisma db push`. La limitation de débit est en mémoire : avec plusieurs instances, la déplacer vers un stockage partagé.

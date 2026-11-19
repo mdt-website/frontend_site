@@ -14,7 +14,8 @@ export function rateLimit(key, max, windowMs) {
 }
 
 export function clientIp(headers) {
-  return (headers.get('x-forwarded-for') || '').split(',')[0].trim() || headers.get('x-real-ip') || 'local';
+  // Derrière Cloudflare, cf-connecting-ip est posé par Cloudflare (le serveur ne doit accepter que son trafic)
+  return headers.get('cf-connecting-ip') || (headers.get('x-forwarded-for') || '').split(',')[0].trim() || headers.get('x-real-ip') || 'local';
 }
 
 export function normalizePhone(p) {

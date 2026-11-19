@@ -2,7 +2,7 @@
 import { useState } from 'react';
 
 // fields: [{ name, label, type: text|email|tel|textarea|select|checkbox|date, required, options }]
-export default function RequestForm({ type, fields, submitLabel = 'Envoyer', successMessage, inline = false }) {
+export default function RequestForm({ type, fields, submitLabel = 'Envoyer', successMessage, inline = false, extra }) {
   const [values, setValues] = useState({});
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle');
@@ -27,7 +27,7 @@ export default function RequestForm({ type, fields, submitLabel = 'Envoyer', suc
     if (!validate()) return;
     setStatus('sending');
     try {
-      const res = await fetch('/api/requests', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type, ...values, website: hp }) });
+      const res = await fetch('/api/requests', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type, ...values, ...extra, website: hp }) });
       if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || 'Envoi impossible, veuillez réessayer.');
       setStatus('done');
     } catch (err) { setServerError(err.message); setStatus('error'); }

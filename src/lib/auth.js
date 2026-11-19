@@ -50,3 +50,27 @@ export async function requireUser(check) {
   if (check && !check(user)) redirect('/admin?denied=1');
   return user;
 }
+
+/* ---------- Sessions des apprenants (cookie distinct de celui du back-office) ---------- */
+const S_COOKIE = 'mdt_student';
+
+export async function createStudentSession(studentId) {
+  const payload = b64(JSON.stringify({ sid: studentId, exp: Date.now() + TTL_MS }));
+  (await cookies()).set(S_COOKIE, `${payload}.${sign(payload)}`, {
+    httpOnly: true, sameSite: 'lax', secure: process.env.NODE_ENV === 'production', path: '/', maxAge: TTL_MS / 1000,
+  });
+}
+export async function destroyStudentSession() { (await cookies()).delete(S_COOKIE); }
+
+export async function getStudent() {
+  const raw = (await cookies()).get(S_COOKIE)?.value;
+  if (!raw) return null;
+  const [payload, sig] = raw.split('.');
+  if (!payload || !sig) return null;
+  const good = sign(payload);
+  if (sig.length !== good.length || !crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(good))) return null;
+  let data;
+  try { data = JSON.parse(Buffer.from(payload, 'base64url').toString()); } catch { return null; }
+  if (!data.sid || !data.exp || data.exp < Date.now()) return null;
+  return db.student.findUnique({ where: { id: data.sid } });
+}

@@ -171,3 +171,92 @@ export async function setUserActive(fd) {
   if (u) await db.user.update({ where: { id }, data: { active: !u.active } });
   revalidatePath('/admin/users');
 }
+
+/* ---------- Formation (LMS) ---------- */
+const slugify = (t) => t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);
+const RESERVED_SLUGS = new Set(['login']);
+
+export async function saveCourse(fd) {
+  await requireUser(can.manageContent);
+  const title = str(fd, 'title', 160);
+  const id = str(fd, 'id', 40);
+  const slug = slugify(str(fd, 'slug', 80) || title);
+  if (!title || !slug || RESERVED_SLUGS.has(slug)) redirect(`/admin/courses${id ? `/${id}` : ''}?error=1`);
+  const data = { title, slug, description: str(fd, 'description', 1000), published: fd.get('published') === 'on', position: parseInt(str(fd, 'position', 5), 10) || 0 };
+  try {
+    if (id) await db.course.update({ where: { id }, data }); else { const c = await db.course.create({ data }); revalidatePath('/lms'); redirect(`/admin/courses/${c.id}`); }
+  } catch (e) {
+    if (e?.digest?.startsWith?.('NEXT_REDIRECT')) throw e;
+    redirect(`/admin/courses${id ? `/${id}` : ''}?error=1`); // slug déjà utilisé
+  }
+  revalidatePath('/lms'); revalidatePath('/admin/courses');
+  redirect(`/admin/courses/${id}?saved=1`);
+}
+export async function deleteCourse(fd) {
+  await requireUser(can.manageContent);
+  await db.course.delete({ where: { id: str(fd, 'id', 40) } }).catch(() => {});
+  revalidatePath('/lms');
+  redirect('/admin/courses');
+}
+export async function saveLesson(fd) {
+  await requireUser(can.manageContent);
+  const courseId = str(fd, 'courseId', 40);
+  const id = str(fd, 'id', 40);
+  const title = str(fd, 'title', 160);
+  if (!title) redirect(`/admin/courses/${courseId}?error=1`);
+  const data = { title, videoUrl: str(fd, 'videoUrl', 500) || null, content: str(fd, 'content', 20000), position: parseInt(str(fd, 'position', 5), 10) || 0 };
+  if (id) await db.lesson.update({ where: { id }, data }); else await db.lesson.create({ data: { ...data, courseId } });
+  revalidatePath('/lms');
+  redirect(`/admin/courses/${courseId}?saved=1`);
+}
+export async function deleteLesson(fd) {
+  await requireUser(can.manageContent);
+  const l = await db.lesson.findUnique({ where: { id: str(fd, 'id', 40) } });
+  if (l) await db.lesson.delete({ where: { id: l.id } });
+  revalidatePath('/lms');
+  redirect(`/admin/courses/${l?.courseId ?? ''}`);
+}
+
+/* ---------- Certificats ---------- */
+const CODE_ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+const newCode = () => Array.from(crypto.randomBytes(10), (b) => CODE_ALPHABET[b % CODE_ALPHABET.length]).join('');
+
+export async function issueCertificates(_prev, fd) {
+  await requireUser(can.manageContent);
+  const title = str(fd, 'title', 160);
+  const issuedOn = new Date(str(fd, 'issuedOn', 30));
+  const sender = str(fd, 'sender', 120) || null;
+  const subject = str(fd, 'subject', 160) || `Votre certificat : ${title}`;
+  if (!title || Number.isNaN(issuedOn.getTime())) return { error: 'Intitulé et date requis.' };
+
+  // Destinataires : cases cochées (parcours terminés) + lignes « Nom, email » saisies à la main
+  const people = [];
+  for (const id of fd.getAll('enrollment')) {
+    const e = await db.enrollment.findUnique({ where: { id: String(id) }, include: { student: true } });
+    if (e) people.push({ name: e.student.name, email: e.student.email });
+  }
+  for (const line of String(fd.get('manual') ?? '').split('\n').slice(0, 300)) {
+    const [name, email] = line.split(/[,;\t]/).map((x) => x.trim());
+    if (name) people.push({ name: name.slice(0, 120), email: email && isEmail(email.toLowerCase()) ? email.toLowerCase() : null });
+  }
+  if (!people.length) return { error: 'Aucun destinataire.' };
+  if (people.length > 300) return { error: '300 destinataires maximum par lot.' };
+
+  const base = (process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3100').replace(/\/$/, '');
+  const results = [];
+  for (const p of people) {
+    const cert = await db.certificate.create({ data: { code: newCode(), name: p.name, email: p.email, title, issuedOn, sender } });
+    const link = `${base}/certificat/${cert.code}`;
+    let status = 'Émis (pas d’email)';
+    if (p.email) {
+      const { sendMail, mailEnabled } = await import('@/lib/mail');
+      if (mailEnabled()) {
+        const r = await sendMail({ to: p.email, subject, text: `Bonjour ${p.name},\n\nFélicitations. Votre certificat « ${title} » est disponible ici :\n${link}\n\nLa Maison de la Transformation` });
+        status = r.sent ? 'Envoyé' : `Échec : ${r.reason}`;
+        if (r.sent) await db.certificate.update({ where: { id: cert.id }, data: { sentAt: new Date() } });
+      } else status = 'Émis (SMTP non configuré)';
+    }
+    results.push({ name: p.name, email: p.email, link, status });
+  }
+  return { ok: `${results.length} certificat(s) émis.`, results };
+}

@@ -26,6 +26,7 @@ const FIELDS = {
   testimony: [...COMMON, 'message', 'publier'],
   contact: [...COMMON, 'message'],
   donation: [...COMMON, 'nature', 'montant', 'moyen'],
+  event_register: [...COMMON, 'evenement', 'personnes'],
 };
 const REQUIRED = {
   default: ['nom', 'telephone'],

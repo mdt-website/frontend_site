@@ -34,7 +34,7 @@ export const FOOTER_COLS = [
   { title: 'Ressources', links: [
     ['Classes de membres', '/membership-class'], ['Célébrations', '/celebrations'],
     ['Accompagnement', '/counselling'], ['Pré-mariage', '/pre-marital-counselling'],
-    ['Post-mariage', '/post-marital-counselling'], ['Aide sociale', '/welfare'] ] },
+    ['Post-mariage', '/post-marital-counselling'], ['Aide sociale', '/welfare'], ['Formation en ligne', '/lms'] ] },
   { title: 'Médias', links: [
     ['Regarder en ligne', SITE.youtube], ['Sermons', '/sermons'], ['Événements', '/events'], ['Contact', '/contact'] ] },
 ];
@@ -47,7 +47,7 @@ export const QUICK_LINKS = [
   ['Post-mariage', '/post-marital-counselling'], ['Aide sociale', '/welfare'],
   ['Rejoindre une cellule', '/cell-church'], ['Rejoindre un groupe MAP', '/map'],
   ['Projet de construction', '/building-project'], ['Bénévoles', '/volunteers'],
-  ['Témoignage', '/testimony'], ['Faire un don', '/give'],
+  ['Témoignage', '/testimony'], ['Formation en ligne', '/lms'], ['Mon visuel d’événement', '/dp'], ['Faire un don', '/give'],
 ];
 
 export const MINISTRIES = [

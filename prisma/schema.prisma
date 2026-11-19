@@ -131,3 +131,63 @@ model Attendance {
 
   @@unique([serviceId, phone])
 }
+
+// ---- Formation en ligne (LMS) ----
+model Course {
+  id          String       @id @default(cuid())
+  slug        String       @unique
+  title       String
+  description String       @default("")
+  published   Boolean      @default(false)
+  position    Int          @default(0)
+  createdAt   DateTime     @default(now())
+  lessons     Lesson[]
+  enrollments Enrollment[]
+}
+
+model Lesson {
+  id       String  @id @default(cuid())
+  courseId String
+  course   Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  title    String
+  videoUrl String?
+  content  String  @default("")
+  position Int     @default(0)
+
+  @@index([courseId, position])
+}
+
+model Student {
+  id           String       @id @default(cuid())
+  name         String
+  email        String       @unique
+  passwordHash String
+  createdAt    DateTime     @default(now())
+  enrollments  Enrollment[]
+}
+
+model Enrollment {
+  id          String    @id @default(cuid())
+  studentId   String
+  student     Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  courseId    String
+  course      Course    @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  done        String    @default("[]") // JSON : identifiants des leçons terminées
+  completedAt DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@unique([studentId, courseId])
+}
+
+// Certificat émis (code public de vérification)
+model Certificate {
+  id          String    @id @default(cuid())
+  code        String    @unique
+  name        String
+  email       String?
+  title       String    // intitulé de la formation
+  issuedOn    DateTime
+  sender      String?
+  sentAt      DateTime?
+  createdAt   DateTime  @default(now())
+}

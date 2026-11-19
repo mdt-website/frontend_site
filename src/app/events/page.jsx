@@ -28,7 +28,7 @@ export default async function Page() {
               <h2 className="h2" style={{ marginBottom: '2rem' }}>À <span className="accent">venir</span></h2>
               <div className="grid g3" style={{ marginBottom: '4rem' }}>
                 {events.map((e) => (
-                  <div className="card" key={e.id}><p className="eyebrow" style={{ color: 'var(--gold-text)', fontWeight: 700, fontSize: 'var(--fs-small)', letterSpacing: '.12em', textTransform: 'uppercase' }}>{fmtDateTime(e.startsAt)}</p><h3>{e.title}</h3>{e.location && <p>{e.location}</p>}{e.description && <p>{e.description}</p>}</div>
+                  <div className="card" key={e.id}><p className="eyebrow" style={{ color: 'var(--gold-text)', fontWeight: 700, fontSize: 'var(--fs-small)', letterSpacing: '.12em', textTransform: 'uppercase' }}>{fmtDateTime(e.startsAt)}</p><h3>{e.title}</h3>{e.location && <p>{e.location}</p>}{e.description && <p>{e.description}</p>}<p><a href={`/events/${e.id}`}>Détails et inscription</a></p></div>
                 ))}
               </div>
             </>

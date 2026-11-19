@@ -1,4 +1,4 @@
-import { SITE, SERVICES } from './site';
+import { SITE, SERVICES } from './site.js';
 
 // Les trois lieux MDT. Les champs marqués `null` sont à fournir par l'église (rien n'est inventé).
 export const CAMPUSES = {

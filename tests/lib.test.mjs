@@ -58,3 +58,29 @@ test('dates : conversion heure du Bénin (UTC+1) aller-retour', () => {
   assert.equal(toInputDateTime(d), '2026-12-06T08:00');
   assert.ok(Number.isNaN(fromInputDateTime('').getTime()));
 });
+
+import { CAMPUSES, isCampus, subdomainUrl } from '../src/lib/campuses.js';
+
+test('lieux : trois lieux valides, entrées inconnues refusées', () => {
+  assert.deepEqual(Object.keys(CAMPUSES), ['calavi', 'cotonou', 'lome']);
+  assert.equal(isCampus('lome'), true);
+  assert.equal(isCampus('__proto__'), false);
+  assert.equal(isCampus('toString'), false);
+  assert.equal(isCampus(null), false);
+});
+
+test('sous-domaines : URL selon le domaine racine', () => {
+  process.env.ROOT_DOMAIN = 'exemple.org';
+  assert.equal(subdomainUrl('lome'), 'https://lome.exemple.org');
+  process.env.ROOT_DOMAIN = 'localhost';
+  assert.equal(subdomainUrl('app'), 'http://app.localhost:3100');
+  delete process.env.ROOT_DOMAIN;
+});
+
+test('IP client : Cloudflare prioritaire', async () => {
+  const { clientIp } = await import('../src/lib/security.js');
+  const h = (o) => ({ get: (k) => o[k] ?? null });
+  assert.equal(clientIp(h({ 'cf-connecting-ip': '1.2.3.4', 'x-forwarded-for': '9.9.9.9' })), '1.2.3.4');
+  assert.equal(clientIp(h({ 'x-forwarded-for': '9.9.9.9, 8.8.8.8' })), '9.9.9.9');
+  assert.equal(clientIp(h({})), 'local');
+});

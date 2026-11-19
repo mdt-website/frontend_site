@@ -24,6 +24,8 @@ export default async function PanelLayout({ children }) {
           <Link href="/admin/services">Cultes et présence</Link>
           {can.manageContent(user) && <Link href="/admin/sermons">Sermons</Link>}
           {can.manageContent(user) && <Link href="/admin/events">Événements</Link>}
+          {can.manageContent(user) && <Link href="/admin/courses">Formation</Link>}
+          {can.manageContent(user) && <Link href="/admin/certificates">Certificats</Link>}
           <h6>Compte</h6>
           {can.manageUsers(user) && <Link href="/admin/users">Utilisateurs</Link>}
           <Link href="/admin/account">Mon compte</Link>
