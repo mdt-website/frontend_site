@@ -246,3 +246,6 @@ a.store:hover { transform: translateY(-2px); }
 .form__opt { display: inline-flex; align-items: center; gap: .5rem; font-weight: 400 !important; color: var(--ink) !important; margin: 0 !important; cursor: pointer; }
 .form__opt input { width: auto !important; accent-color: var(--navy); }
 .form__grid > .form__check { align-items: flex-start; }
+
+.row-card--on { border-color: var(--gold-deep); background: var(--gold-tint); }
+button.row-card { font: inherit; width: 100%; }

@@ -2,7 +2,6 @@ import Link from 'next/link';
 import Hero from '@/components/Hero';
 import Faq from '@/components/Faq';
 import RequestForm from '@/components/RequestForm';
-import { IDENT } from '@/lib/fields';
 import { FAQ_GIVE } from '@/lib/faq';
 
 export const metadata = { title: 'Donner' };
@@ -38,10 +37,10 @@ export default function Page() {
       <section className="section bg-cream">
         <div className="container">
           <div className="center stack" style={{ marginBottom: '2.5rem' }}>
-            <h2 className="h2">Que souhaitez-vous <span className="accent">donner ?</span></h2>
+            <h2 className="h2">Donner à un <span className="accent">lieu précis</span></h2>
             <p className="lead">Annoncez votre don pour que l’équipe puisse l’enregistrer et vous remercier.</p>
           </div>
-          <RequestForm type="donation" submitLabel="Annoncer mon don" fields={[...IDENT, { name: 'nature', label: 'Nature du don', type: 'select', required: true, options: ['Dîme', 'Offrande', 'Semence', 'Projet de construction', 'Autre'] }, { name: 'montant', label: 'Montant (FCFA)' }, { name: 'moyen', label: 'Moyen utilisé', type: 'select', options: ['Mobile Money', 'Virement', 'Sur place'] }]} />
+          <RequestForm type="donation" form="donation" submitLabel="Annoncer mon don" />
         </div>
       </section>
 

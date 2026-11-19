@@ -218,6 +218,17 @@ export const FORMS = {
     ],
   },
 
+  donation: {
+    title: 'Annoncer un don',
+    fields: [
+      NAME(), PHONE({ label: 'Téléphone', required: true }), EMAIL(),
+      CAMPUS('lieu', 'Donner à quel lieu ?'),
+      f('nature', 'Que souhaitez-vous donner ?', 'radio', { required: true, options: ['Offrande', 'Dîme', 'Loyer', 'Projet de construction', 'Spécial'] }),
+      f('montant', 'Montant (FCFA)', 'text', { width: 'half', placeholder: '25 000' }),
+      f('moyen', 'Moyen de paiement', 'select', { width: 'half', options: ['MTN MoMo', 'Moov Money', 'Virement bancaire', 'Sur place'] }),
+    ],
+  },
+
   volunteer: {
     title: 'Bénévoles',
     fields: [
