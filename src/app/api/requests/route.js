@@ -1,6 +1,7 @@
 import { db } from '@/lib/db';
 import { REQUEST_TYPES } from '@/lib/crm';
 import { isCampus } from '@/lib/campuses';
+import { FORMS, isShown } from '@/lib/forms';
 import { clientIp, isEmail, normalizePhone, rateLimit } from '@/lib/security';
 
 const MAX_FIELD = 4000;
@@ -80,26 +81,53 @@ export async function POST(req) {
   if (!REQUEST_TYPES[type]) return json({ error: 'Type de demande inconnu' }, 400);
 
   const data = {};
-  for (const k of FIELDS[type]) {
-    const v = body[k];
-    if (typeof v === 'string') { const t = v.trim().slice(0, MAX_FIELD); if (t) data[k] = t; }
-    else if (typeof v === 'boolean') data[k] = v;
-  }
-  for (const k of REQUIRED[type] || REQUIRED.default) {
-    if (!data[k]) return json({ error: 'Veuillez remplir tous les champs obligatoires.' }, 400);
+  const spec = FORMS[type];
+  if (spec) {
+    // Formulaire calqué sur CCI : on valide chaque champ selon sa définition (type, options, obligatoire, affichage conditionnel)
+    const raw = {};
+    for (const f of spec.fields) raw[f.name] = body[f.name];
+    for (const f of spec.fields) {
+      if (!isShown(f, raw)) continue;
+      let v = raw[f.name];
+      if (f.type === 'multi') {
+        v = Array.isArray(v) ? v.filter((x) => typeof x === 'string' && f.options.includes(x)) : [];
+        if (v.length) data[f.name] = v.join(', ');
+      } else if (f.type === 'consent' || f.type === 'checkbox') {
+        if (v === true) data[f.name] = true;
+      } else if (typeof v === 'string' && v.trim()) {
+        v = v.trim().slice(0, MAX_FIELD);
+        if ((f.type === 'select' || f.type === 'radio') && !f.options.includes(v)) return json({ error: `Valeur invalide : ${f.label}` }, 400);
+        if (f.type === 'date' && !/^\d{4}-\d{2}-\d{2}$/.test(v)) return json({ error: `Date invalide : ${f.label}` }, 400);
+        if (f.type === 'time' && !/^\d{2}:\d{2}$/.test(v)) return json({ error: `Heure invalide : ${f.label}` }, 400);
+        if (f.type === 'email' && !isEmail(v)) return json({ error: `Email invalide : ${f.label}` }, 400);
+        if (f.type === 'tel' && !normalizePhone(v)) return json({ error: `Numéro invalide : ${f.label}` }, 400);
+        data[f.name] = f.type === 'email' ? v.toLowerCase() : v;
+      }
+      if (f.required && data[f.name] == null) return json({ error: 'Veuillez remplir tous les champs obligatoires.' }, 400);
+    }
+  } else {
+    for (const k of FIELDS[type]) {
+      const v = body[k];
+      if (typeof v === 'string') { const t = v.trim().slice(0, MAX_FIELD); if (t) data[k] = t; }
+      else if (typeof v === 'boolean') data[k] = v;
+    }
+    for (const k of REQUIRED[type] || REQUIRED.default) {
+      if (!data[k]) return json({ error: 'Veuillez remplir tous les champs obligatoires.' }, 400);
+    }
   }
   const phone = normalizePhone(data.telephone);
   if (data.telephone && !phone) return json({ error: 'Numéro de téléphone invalide' }, 400);
   if (data.email && !isEmail(data.email)) return json({ error: 'Email invalide' }, 400);
   if (data.email) data.email = data.email.toLowerCase();
+  if (!data.nom) return json({ error: 'Veuillez remplir tous les champs obligatoires.' }, 400);
 
   // CRM : retrouver ou créer la personne (téléphone, sinon email)
   const email = data.email || null;
   let person = (phone && (await db.person.findFirst({ where: { phone } }))) || (email && (await db.person.findFirst({ where: { email } }))) || null;
   if (person) {
-    person = await db.person.update({ where: { id: person.id }, data: { name: data.nom, phone: phone || person.phone, email: email || person.email, quarter: data.quartier || data.zone || person.quarter } });
+    person = await db.person.update({ where: { id: person.id }, data: { name: data.nom, phone: phone || person.phone, email: email || person.email, quarter: data.localisation || data.quartier || data.zone || person.quarter } });
   } else {
-    person = await db.person.create({ data: { name: data.nom, phone, email, quarter: data.quartier || data.zone || null, source: type, campus } });
+    person = await db.person.create({ data: { name: data.nom, phone, email, quarter: data.localisation || data.quartier || data.zone || null, source: type, campus } });
   }
 
   const request = await db.request.create({ data: { type, campus, data: JSON.stringify(data), personId: person.id } });

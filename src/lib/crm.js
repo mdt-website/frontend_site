@@ -6,6 +6,7 @@ export const REQUEST_TYPES = {
   class_certificate: 'Classes de membres : certificat',
   prayer: 'Requête de prière',
   first_timer: 'Première visite',
+  second_timer: 'Deuxième visite',
   online_community: 'Communauté en ligne',
   counselling: 'Conseil pastoral',
   pre_marital: 'Conseil pré-mariage',

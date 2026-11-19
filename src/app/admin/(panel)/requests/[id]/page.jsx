@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { db } from '@/lib/db';
 import { requireUser } from '@/lib/auth';
+import { FORMS } from '@/lib/forms';
 import { can, FIELD_LABELS, REQUEST_TYPES, SENSITIVE_TYPES, STATUS } from '@/lib/crm';
 import { fmtDateTime } from '@/lib/format';
 import { updateRequest } from '../../../actions';
@@ -28,7 +29,7 @@ export default async function RequestDetail({ params, searchParams }) {
           <dt>Reçue le</dt><dd>{fmtDateTime(r.createdAt)}</dd>
           <dt>Personne</dt><dd>{r.person ? <Link href={`/admin/people/${r.person.id}`}>{r.person.name}</Link> : '—'}</dd>
           {Object.entries(data).filter(([k]) => k !== 'nom').map(([k, v]) => (
-            <Fragment key={k}><dt>{FIELD_LABELS[k] || k}</dt><dd>{typeof v === 'boolean' ? (v ? 'Oui' : 'Non') : String(v)}</dd></Fragment>
+            <Fragment key={k}><dt>{FORMS[r.type]?.fields.find((f) => f.name === k)?.label || FIELD_LABELS[k] || k}</dt><dd>{typeof v === 'boolean' ? (v ? 'Oui' : 'Non') : String(v)}</dd></Fragment>
           ))}
         </dl>
       </div>

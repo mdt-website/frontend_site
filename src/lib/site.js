@@ -41,7 +41,7 @@ export const FOOTER_COLS = [
 
 export const QUICK_LINKS = [
   ['Devenir membre', '/membership'], ['Classes de membres (inscription)', '/membership-class'],
-  ['Première visite', '/first-timers'], ['Communauté en ligne', '/online-community'],
+  ['Première visite', '/first-timers'], ['Deuxième visite', '/second-timers'], ['Communauté en ligne', '/online-community'],
   ['Requête de prière', '/prayer-request'], ['Célébrations', '/celebrations'],
   ['Accompagnement', '/counselling'], ['Pré-mariage', '/pre-marital-counselling'],
   ['Post-mariage', '/post-marital-counselling'], ['Aide sociale', '/welfare'],

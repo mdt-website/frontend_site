@@ -1,15 +1,20 @@
 import Hero from './Hero';
 import RequestForm from './RequestForm';
+import { FORMS } from '@/lib/forms';
 
-export default function FormPage({ eyebrow, title, accent, text, image, intro, type, fields, submitLabel, successMessage, aside }) {
+// Avec `form` : en-tête « Formulaires / Titre / Veuillez renseigner vos informations » puis formulaire calqué sur CCI.
+// Sans `form` : ancien format (champs fournis par la page), pour les pages qui n'ont pas d'équivalent CCI.
+export default function FormPage({ type, form, eyebrow, title, accent, text, image, intro, fields, submitLabel, successMessage, aside }) {
   return (
     <>
-      <Hero eyebrow={eyebrow} title={title} accent={accent} text={text} image={image} />
+      {form
+        ? <Hero eyebrow="Formulaires" title={FORMS[form].title} text="Veuillez renseigner vos informations" image={image} />
+        : <Hero eyebrow={eyebrow} title={title} accent={accent} text={text} image={image} />}
       <section className="section bg-cream">
-        <div className="container center">
-          {intro && <p className="lead" style={{ marginBottom: '2.5rem' }}>{intro}</p>}
+        <div className="container">
+          {!form && intro && <p className="lead center" style={{ marginBottom: '2.5rem' }}>{intro}</p>}
           {aside}
-          <RequestForm type={type} fields={fields} submitLabel={submitLabel} successMessage={successMessage} />
+          <RequestForm type={type} form={form} fields={fields} submitLabel={submitLabel} successMessage={successMessage} />
         </div>
       </section>
     </>
