@@ -1,7 +1,7 @@
 import { appendFile, mkdir } from 'node:fs/promises';
 import path from 'node:path';
 
-const TYPES = new Set(['newsletter', 'membership', 'class_enrol', 'class_makeup', 'class_certificate', 'prayer', 'first_timer', 'online_community', 'counselling', 'pre_marital', 'post_marital', 'welfare', 'celebration', 'cell_join', 'cell_register', 'map_join', 'volunteer', 'testimony', 'contact']);
+const TYPES = new Set(['newsletter', 'membership', 'class_enrol', 'class_makeup', 'class_certificate', 'prayer', 'first_timer', 'online_community', 'counselling', 'pre_marital', 'post_marital', 'welfare', 'celebration', 'cell_join', 'cell_register', 'map_join', 'volunteer', 'testimony', 'contact', 'donation']);
 
 // Phase 1 : journal local (.data/requests.jsonl). Phase 2 : remplacé par la base de données du CRM.
 export async function POST(req) {

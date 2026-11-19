@@ -1,6 +1,8 @@
 import Hero from '@/components/Hero';
 import RequestForm from '@/components/RequestForm';
 import { IDENT, CONSENT } from '@/lib/fields';
+import Faq from '@/components/Faq';
+import { FAQ_CELL } from '@/lib/faq';
 
 export const metadata = { title: 'Cellules de maison' };
 
@@ -70,6 +72,20 @@ export default function Page() {
             <p className="lead">Vous hébergez ou souhaitez lancer une cellule ? Déclarez-la ici.</p>
           </div>
           <RequestForm type="cell_register" submitLabel="Enregistrer ma cellule" fields={[...IDENT, { name: 'zone', label: 'Quartier / adresse', required: true }, { name: 'jour', label: 'Jour et heure de rencontre' }, CONSENT]} />
+        </div>
+      </section>
+      <section className="section">
+        <div className="container">
+          <div className="center stack" style={{ marginBottom: '2.5rem' }}><h2 className="h2">Questions <span className="accent">fréquentes</span></h2></div>
+          <Faq items={FAQ_CELL} />
+        </div>
+      </section>
+
+      <section className="banner" style={{ backgroundImage: 'url(/img/discover2.jpg)', alignItems: 'center', minHeight: 'clamp(22rem, 55svh, 34rem)' }}>
+        <div className="container center stack">
+          <h2 className="h2" style={{ maxWidth: '16ch', marginInline: 'auto' }}>Rejoignez une cellule <span className="accent">près de chez vous</span></h2>
+          <p className="lead">Nous bâtissons un réseau de cellules dans les quartiers. Inscrivez-vous et prenez part à un mouvement qui transforme des vies.</p>
+          <div className="btn-row center"><a className="btn btn-gold" href="#rejoindre">Rejoindre une cellule</a></div>
         </div>
       </section>
     </>

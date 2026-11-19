@@ -22,6 +22,16 @@ export default function Page() {
           <iframe title="Carte MDT" loading="lazy" style={{ border: 0, width: '100%', aspectRatio: '4 / 5', borderRadius: 14 }} src="https://www.google.com/maps?q=Zogbadj%C3%A8%20Abomey-Calavi%20B%C3%A9nin&output=embed" />
         </div>
       </section>
+      <section className="section bg-cream">
+        <div className="container">
+          <div className="center stack" style={{ marginBottom: '2.5rem' }}><h2 className="h2">À quoi vous <span className="accent">attendre</span></h2><p className="lead">Votre première visite en trois étapes. [Texte à valider par l’église.]</p></div>
+          <div className="grid g3">
+            {[['Un accueil chaleureux', 'Notre équipe d’accueil vous reçoit et vous oriente à votre arrivée.'], ['Un culte vivant', 'Louange, prière et enseignement de la Parole dans une atmosphère d’adoration.'], ['Une famille', 'Après le culte, faites connaissance et rejoignez un groupe ou une cellule.']].map(([t, p], i) => (
+              <div className="card" key={t}><span className="num">{i + 1}</span><h3>{t}</h3><p>{p}</p></div>))}
+          </div>
+          <div className="btn-row center mt"><a className="btn btn-navy" href="/first-timers">Annoncer ma visite</a></div>
+        </div>
+      </section>
     </>
   );
 }

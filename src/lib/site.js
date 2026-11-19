@@ -10,6 +10,8 @@ export const SITE = {
   youtube: 'https://www.youtube.com/@LaMaisondelaTransformation',
   facebook: 'https://www.facebook.com/profile.php?id=61564409844332',
   instagram: 'https://www.instagram.com/lamaisonde_latransformation/',
+  // Liens des applications mobiles : à renseigner dès que l'app est publiée (laisser vide = badge « Bientôt »).
+  apps: { ios: '', android: '' },
 };
 
 export const NAV = [

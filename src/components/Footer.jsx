@@ -1,9 +1,16 @@
 import Link from 'next/link';
-import { FaFacebook, FaInstagram, FaYoutube } from 'react-icons/fa';
+import { FaApple, FaFacebook, FaGooglePlay, FaInstagram, FaYoutube } from 'react-icons/fa';
 import { SITE, FOOTER_COLS } from '@/lib/site';
 import RequestForm from './RequestForm';
 
 const ext = (h) => h.startsWith('http');
+
+function StoreBadge({ href, icon, small, name }) {
+  const inner = (<><span className="store__icon">{icon}</span><span><small>{href ? small : 'Bientôt sur'}</small><strong>{name}</strong></span></>);
+  return href
+    ? <a className="store" href={href} target="_blank" rel="noopener noreferrer">{inner}</a>
+    : <span className="store store--soon" aria-disabled="true">{inner}</span>;
+}
 
 export default function Footer() {
   return (
@@ -39,6 +46,10 @@ export default function Footer() {
               ))}</ul>
             </div>
           ))}
+        </div>
+        <div className="container footer__apps">
+          <StoreBadge href={SITE.apps.ios} icon={<FaApple />} small="Télécharger sur" name="App Store" />
+          <StoreBadge href={SITE.apps.android} icon={<FaGooglePlay />} small="Disponible sur" name="Google Play" />
         </div>
         <div className="container"><hr className="footer__line" /></div>
         <div className="container footer__bottom">

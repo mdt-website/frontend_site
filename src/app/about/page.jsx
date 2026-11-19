@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Hero from '@/components/Hero';
+import { TESTIMONIES } from '@/lib/faq';
 
 export const metadata = { title: 'À propos' };
 
@@ -46,6 +47,20 @@ export default function About() {
         </div>
       </section>
 
+      <section className="section bg-cream">
+        <div className="container">
+          <div className="center stack">
+            <span className="pill" style={{ color: 'var(--navy)' }}>Témoignages de membres</span>
+            <h2 className="h2">Des vies <span className="accent">transformées</span></h2>
+          </div>
+          {TESTIMONIES.length ? (
+            <div className="grid g3 mt">{TESTIMONIES.map((t) => <article className="testi" key={t.title}><h3>{t.title}</h3><p>{t.text}</p><footer>{t.author}</footer></article>)}</div>
+          ) : (
+            <div className="center stack mt"><p className="lead">Vous avez vécu quelque chose avec Dieu à la MDT ? Partagez-le pour encourager d’autres personnes.</p><Link className="btn btn-navy" href="/testimony">Partager mon témoignage</Link></div>
+          )}
+        </div>
+      </section>
+
       <section className="section bg-dark" id="pasteur">
         <div className="container split">
           <img src="/img/pasteur1.jpg" alt="Pasteur Herbert Donald" />
@@ -55,6 +70,18 @@ export default function About() {
             <p className="lead">Chaque dimanche, nous nous réunissons pour célébrer Sa présence, recevoir Sa Parole et expérimenter Son amour transformateur. Que vous cherchiez une communauté, une restauration personnelle ou un moment de communion avec Dieu, vous êtes les bienvenus.</p>
             <p className="lead">Notre désir est que chacun vive une transformation profonde, guidée par le Saint-Esprit.</p>
             <Link className="btn btn-outline" href="/contact">Écrire à l’église</Link>
+          </div>
+        </div>
+      </section>
+      <section className="section">
+        <div className="container">
+          <div className="center stack"><span className="pill" style={{ color: 'var(--navy)' }}>Communauté</span><h2 className="h2">Nous vivons la communauté <span className="accent">autrement</span></h2><p className="lead">Plus qu’une église, un lieu où grandir.</p></div>
+          <div className="grid g3 mt">
+            {[['Classes de membres', 'Des enseignements bibliques précis pour poser un solide fondement à votre croissance spirituelle.', '/membership-class', '/img/about.jpg'],
+              ['Célébrations', 'Vous êtes une réponse à nos prières : nous vous célébrons chaque jour, surtout dans vos moments spéciaux.', '/celebrations', '/img/gallery3.jpg'],
+              ['Accompagnement', 'Quelqu’un est toujours disponible pour prier avec vous et vous conseiller, sans jugement.', '/counselling', '/img/discover1.jpg']].map(([t, p, h, img]) => (
+              <Link key={h} href={h} className="media-card"><div className="img" style={{ backgroundImage: `url(${img})` }} /><h3>{t} →</h3><p>{p}</p></Link>
+            ))}
           </div>
         </div>
       </section>

@@ -1,6 +1,8 @@
 import Hero from '@/components/Hero';
 import RequestForm from '@/components/RequestForm';
 import { IDENT, CONSENT } from '@/lib/fields';
+import Faq from '@/components/Faq';
+import { FAQ_MAP } from '@/lib/faq';
 
 export const metadata = { title: 'MAP – Rencontre et Prière' };
 
@@ -31,6 +33,22 @@ export default function Page() {
         <div className="container head-split">
           <div className="stack"><h2 className="h2">Trouver un groupe <span className="accent">MAP</span></h2><p className="lead">Retrouvez des membres proches de vous pour prier et vivre la communion.</p></div>
           <RequestForm type="map_join" submitLabel="Rejoindre un MAP" fields={[...IDENT, { name: 'zone', label: 'Votre quartier', required: true }, CONSENT]} />
+        </div>
+      </section>
+      <section className="section">
+        <div className="container">
+          <div className="center stack" style={{ marginBottom: '2.5rem' }}><h2 className="h2">Lieux <span className="accent">MAP</span></h2><p className="lead">Retrouvez des membres proches de vous pour la prière et la communion.</p></div>
+          <div className="stack" style={{ maxWidth: 900, margin: '0 auto' }}>
+            <div className="row-card"><strong>Abomey-Calavi</strong><span>Bénin</span></div>
+            <p className="note">[Autres groupes MAP à ajouter par l’église.]</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="section bg-cream">
+        <div className="container">
+          <div className="center stack" style={{ marginBottom: '2.5rem' }}><h2 className="h2">Questions <span className="accent">fréquentes</span></h2></div>
+          <Faq items={FAQ_MAP} />
         </div>
       </section>
     </>
