@@ -1,4 +1,5 @@
 import { db } from '@/lib/db';
+import { isCampus } from '@/lib/campuses';
 import { clientIp, normalizePhone, rateLimit } from '@/lib/security';
 
 const json = (body, status = 200) => Response.json(body, { status });
@@ -18,10 +19,10 @@ export async function POST(req) {
   if (!name) return json({ error: 'Votre nom est requis.' }, 400);
   if (!phone) return json({ error: 'Numéro de téléphone invalide.' }, 400);
 
-  const service = await db.service.findFirst({ where: { code, open: true }, orderBy: { date: 'desc' } });
+  const service = await db.service.findFirst({ where: { code, open: true, ...(isCampus(req.headers.get('x-campus')) ? { campus: req.headers.get('x-campus') } : {}) }, orderBy: { date: 'desc' } });
   if (!service) return json({ error: 'Code incorrect ou culte fermé.' }, 404);
 
-  const person = (await db.person.findFirst({ where: { phone } })) || (await db.person.create({ data: { name, phone, source: 'checkin' } }));
+  const person = (await db.person.findFirst({ where: { phone } })) || (await db.person.create({ data: { name, phone, source: 'checkin', campus: service.campus } }));
   try {
     await db.attendance.create({ data: { serviceId: service.id, personId: person.id, name, phone } });
   } catch {

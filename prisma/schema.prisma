@@ -29,6 +29,7 @@ model Person {
   email      String?
   quarter    String?
   source     String?
+  campus     String       @default("calavi")
   createdAt  DateTime     @default(now())
   updatedAt  DateTime     @updatedAt
   requests   Request[]
@@ -47,6 +48,7 @@ model Request {
   status       String   @default("NEW")
   data         String   // JSON des champs du formulaire
   notes        String?
+  campus       String   @default("calavi")
   personId     String?
   person       Person?  @relation(fields: [personId], references: [id], onDelete: SetNull)
   assignedToId String?
@@ -96,6 +98,7 @@ model Event {
   description String?
   startsAt    DateTime
   location    String?
+  campus      String?  // vide = tous les lieux
   published   Boolean  @default(true)
   createdAt   DateTime @default(now())
 
@@ -108,6 +111,7 @@ model Service {
   title      String
   date       DateTime
   code       String
+  campus     String       @default("calavi")
   open       Boolean      @default(true)
   createdAt  DateTime     @default(now())
   attendance Attendance[]

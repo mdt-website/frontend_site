@@ -1,5 +1,6 @@
 import Hero from '@/components/Hero';
 import { SITE, SERVICES } from '@/lib/site';
+import { CAMPUS_LIST, subdomainUrl } from '@/lib/campuses';
 
 export const metadata = { title: 'Lieux' };
 
@@ -7,6 +8,20 @@ export default function Page() {
   return (
     <>
       <Hero eyebrow="Nous trouver" title="Nous enrôlons, formons" accent="et envoyons" text="Rejoignez-nous à la Maison de la Transformation." image="/img/fond1.jpg" />
+      <section className="section bg-cream">
+        <div className="container">
+          <div className="center stack" style={{ marginBottom: '2rem' }}><h2 className="h2">Nos <span className="accent">lieux</span></h2><p className="lead">Une même famille, trois villes, deux pays.</p></div>
+          <div className="grid g3">
+            {CAMPUS_LIST.map((c) => (
+              <div className="card" key={c.slug}>
+                <h3>{c.name}</h3>
+                <p>{c.city}, {c.country}</p>
+                <div className="btn-row"><a className="btn btn-navy" href={subdomainUrl(c.slug)}>Visiter le site</a></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
       <section className="section">
         <div className="container split">
           <div className="stack">

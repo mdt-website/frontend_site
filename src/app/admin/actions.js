@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { db } from '@/lib/db';
 import { createSession, destroySession, hashPassword, requireUser, verifyPassword } from '@/lib/auth';
+import { isCampus } from '@/lib/campuses';
 import { can, DONATION_STATUS, ROLES, SENSITIVE_TYPES, STATUS } from '@/lib/crm';
 import { clientIp, isEmail, rateLimit } from '@/lib/security';
 import { fromInputDateTime } from '@/lib/format';
@@ -135,7 +136,8 @@ export async function createService(fd) {
     code = String(crypto.randomInt(1000, 10000));
     if (!(await db.service.findFirst({ where: { code, open: true } }))) break;
   }
-  await db.service.create({ data: { title, date, code } });
+  const campus = isCampus(str(fd, 'campus', 20)) ? str(fd, 'campus', 20) : 'calavi';
+  await db.service.create({ data: { title, date, code, campus } });
   revalidatePath('/admin/services');
   redirect('/admin/services');
 }

@@ -1,5 +1,6 @@
 import { db } from '@/lib/db';
 import { REQUEST_TYPES } from '@/lib/crm';
+import { isCampus } from '@/lib/campuses';
 import { clientIp, isEmail, normalizePhone, rateLimit } from '@/lib/security';
 
 const MAX_FIELD = 4000;
@@ -63,6 +64,9 @@ export async function POST(req) {
   if (body.website) return json({ ok: true });
 
   const { type } = body;
+  // Le lieu vient du sous-domaine (en-tête posé par le proxy, jamais par le client)
+  const hc = req.headers.get('x-campus');
+  const campus = isCampus(hc) ? hc : 'calavi';
 
   // Newsletter : table dédiée
   if (type === 'newsletter') {
@@ -94,10 +98,10 @@ export async function POST(req) {
   if (person) {
     person = await db.person.update({ where: { id: person.id }, data: { name: data.nom, phone: phone || person.phone, email: email || person.email, quarter: data.quartier || data.zone || person.quarter } });
   } else {
-    person = await db.person.create({ data: { name: data.nom, phone, email, quarter: data.quartier || data.zone || null, source: type } });
+    person = await db.person.create({ data: { name: data.nom, phone, email, quarter: data.quartier || data.zone || null, source: type, campus } });
   }
 
-  const request = await db.request.create({ data: { type, data: JSON.stringify(data), personId: person.id } });
+  const request = await db.request.create({ data: { type, campus, data: JSON.stringify(data), personId: person.id } });
 
   if (type === 'donation') {
     const amount = parseInt(String(data.montant || '').replace(/\D/g, ''), 10);
