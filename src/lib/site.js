@@ -40,14 +40,33 @@ export const FOOTER_COLS = [
 ];
 
 export const QUICK_LINKS = [
-  ['Devenir membre', '/membership'], ['Classes de membres (inscription)', '/membership-class'],
-  ['Première visite', '/first-timers'], ['Deuxième visite', '/second-timers'], ['Communauté en ligne', '/online-community'],
-  ['Requête de prière', '/prayer-request'], ['Célébrations', '/celebrations'],
-  ['Accompagnement', '/counselling'], ['Pré-mariage', '/pre-marital-counselling'],
-  ['Post-mariage', '/post-marital-counselling'], ['Aide sociale', '/welfare'],
+  ['Expérience de discipulat MDT', '/lms'],
+  ['Programme Legacy Fellows', '/legacy-fellows'],
+  ['Legacy : projets à l’honneur', '/legacy-spotlight'],
+  ['Célébrations', '/celebrations'],
+  ['Enquête de satisfaction', '/feedback-survey'],
+  ['Première visite', '/first-timers'],
+  ['Rapport de présence du protocole', '/gpa'],
+  ['Bénévoles de la ligne d’écoute', '/helpline-volunteers'],
+  ['Devenir membre', '/membership'],
+  ['Classe de membres (terminée)', '/membership-class/completed'],
+  ['Classe de membres (rattrapage)', '/membership-class/makeup'],
+  ['Classe de membres (nouvelle inscription)', '/membership-class/new'],
+  ['Bénévoles des nouveaux lieux', '/volunteers'],
+  ['Communauté en ligne', '/online-community'],
+  ['Préparer sa vie', '/pfl'],
+  ['Conseil post-mariage', '/post-marital-counselling'],
+  ['Requête de prière', '/prayer-request'],
+  ['Conseil pré-mariage', '/pre-marital-counselling'],
+  ['Camp : inscription', '/camp'],
+  ['Deuxième visite', '/second-timers'],
+  ['Seniors Connect', '/seniors-connect'],
+  ['Témoignage', '/testimony'],
+  ['Aide sociale', '/welfare'],
+  ['Jeunesse : retour d’expérience', '/yaf-feedback'],
+  // Spécifique MDT
   ['Rejoindre une cellule', '/cell-church'], ['Rejoindre un groupe MAP', '/map'],
-  ['Projet de construction', '/building-project'], ['Bénévoles', '/volunteers'],
-  ['Témoignage', '/testimony'], ['Formation en ligne', '/lms'], ['Mon visuel d’événement', '/dp'], ['Faire un don', '/give'],
+  ['Projet de construction', '/building-project'], ['Faire un don', '/give'], ['Mon visuel d’événement', '/dp'],
 ];
 
 export const MINISTRIES = [

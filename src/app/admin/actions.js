@@ -10,6 +10,7 @@ import { can, DONATION_STATUS, ROLES, SENSITIVE_TYPES, STATUS } from '@/lib/crm'
 import { clientIp, isEmail, rateLimit } from '@/lib/security';
 import { fromInputDateTime } from '@/lib/format';
 
+const slugify = (t) => t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);
 const str = (fd, k, max = 500) => String(fd.get(k) ?? '').trim().slice(0, max);
 
 /* ---------- Session ---------- */
@@ -83,15 +84,21 @@ function sermonData(fd) {
   const date = new Date(str(fd, 'date', 30));
   if (!title || !url || Number.isNaN(date.getTime())) return null;
   if (!/^https?:\/\//.test(url)) return null;
-  return { title, speaker: str(fd, 'speaker', 120) || 'Pasteur Herbert Donald', date, url, audioUrl: str(fd, 'audioUrl', 500) || null, tags: str(fd, 'tags', 200), published: fd.get('published') === 'on' };
+  return { title, series: str(fd, 'series', 120) || null, description: str(fd, 'description', 2000), speaker: str(fd, 'speaker', 120) || 'Pasteur Herbert Donald', date, url, audioUrl: str(fd, 'audioUrl', 500) || null, tags: str(fd, 'tags', 200), published: fd.get('published') === 'on' };
 }
 export async function saveSermon(fd) {
   await requireUser(can.manageContent);
   const data = sermonData(fd);
   const id = str(fd, 'id', 40);
   if (!data) redirect(`/admin/sermons${id ? `/${id}` : '/new'}?error=1`);
-  if (id) await db.sermon.update({ where: { id }, data }); else await db.sermon.create({ data });
-  revalidatePath('/sermons'); revalidatePath('/admin/sermons');
+  if (id) await db.sermon.update({ where: { id }, data });
+  else {
+    // Adresse lisible et unique : /sermons/<slug> (les mots réservés par les sous-pages sont évités)
+    let slug = slugify(data.title) || 'sermon';
+    if (['search', 'series', 'live'].includes(slug) || (await db.sermon.findUnique({ where: { slug } }))) slug = `${slug}-${crypto.randomInt(1000, 10000)}`;
+    await db.sermon.create({ data: { ...data, slug } });
+  }
+  revalidatePath('/sermons', 'layout'); revalidatePath('/admin/sermons');
   redirect('/admin/sermons');
 }
 export async function deleteSermon(fd) {
@@ -173,7 +180,6 @@ export async function setUserActive(fd) {
 }
 
 /* ---------- Formation (LMS) ---------- */
-const slugify = (t) => t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 60);
 const RESERVED_SLUGS = new Set(['login']);
 
 export async function saveCourse(fd) {

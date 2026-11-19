@@ -25,6 +25,8 @@ export default async function SermonForm({ params, searchParams }) {
         </div>
         <div><label htmlFor="url">Lien vidéo (YouTube…) *</label><input id="url" name="url" type="url" required defaultValue={s?.url} /></div>
         <div><label htmlFor="audioUrl">Lien audio (optionnel)</label><input id="audioUrl" name="audioUrl" type="url" defaultValue={s?.audioUrl || ''} /></div>
+        <div><label htmlFor="series">Série (optionnel : regroupe plusieurs sermons)</label><input id="series" name="series" defaultValue={s?.series || ''} /></div>
+        <div><label htmlFor="description">Description</label><textarea id="description" name="description" rows={3} defaultValue={s?.description || ''} /></div>
         <div><label htmlFor="tags">Thèmes (séparés par des virgules : Grâce, Foi…)</label><input id="tags" name="tags" defaultValue={s?.tags} /></div>
         <label><input type="checkbox" name="published" defaultChecked={s ? s.published : true} /> Publié sur le site</label>
         <div><button className="adm__btn">Enregistrer</button></div>

@@ -249,3 +249,15 @@ a.store:hover { transform: translateY(-2px); }
 
 .row-card--on { border-color: var(--gold-deep); background: var(--gold-tint); }
 button.row-card { font: inherit; width: 100%; }
+
+.form__tel { display: grid; grid-template-columns: minmax(120px, 38%) 1fr; gap: .6rem; }
+.form__tel select { padding: .85rem .6rem; }
+@media (max-width: 480px) { .form__tel { grid-template-columns: 1fr; } }
+.form__section { margin: 1rem 0 .6rem; padding-top: 1rem; border-top: 1px solid rgba(178,154,79,.35); font-size: var(--fs-h3); color: var(--navy); }
+
+/* Espace sermons */
+.sermons-nav { background: var(--ink-dark); padding-top: 76px; }
+.sermons-nav .container { display: flex; gap: .4rem 1.6rem; flex-wrap: wrap; justify-content: center; padding-block: .8rem; }
+.sermons-nav a { color: #fff; font-size: var(--fs-small); letter-spacing: .14em; text-transform: uppercase; font-weight: 600; opacity: .85; padding: .2rem 0; border-bottom: 2px solid transparent; }
+.sermons-nav a:hover, .sermons-nav a[aria-current=page] { opacity: 1; border-color: var(--gold); }
+a.filter { display: inline-block; }

@@ -1,27 +1,38 @@
-import Hero from '@/components/Hero';
-import SermonList from './SermonList';
+import Link from 'next/link';
 import { SITE } from '@/lib/site';
-import { db } from '@/lib/db';
-import { fmtDate } from '@/lib/format';
+import { SERMON_THEMES, listSermons } from '@/lib/sermons';
+import SermonsNav from './SermonsNav';
+import SermonCard from './SermonCard';
+import Greeting from './Greeting';
 
-export const metadata = { title: 'Sermons' };
-export const revalidate = 60;
+export const metadata = { title: 'Sermons', description: 'Les enseignements de la Maison de la Transformation.' };
+export const dynamic = 'force-dynamic';
 
-async function getSermons() {
-  try {
-    const rows = await db.sermon.findMany({ where: { published: true }, orderBy: { date: 'desc' }, take: 60 });
-    return rows.map((s) => ({ id: s.id, title: s.title, speaker: s.speaker, date: fmtDate(s.date), url: s.url, tags: s.tags.split(',').map((t) => t.trim()).filter(Boolean) }));
-  } catch {
-    return []; // base indisponible : la page reste utilisable (lien YouTube)
-  }
-}
+const STEP = 12;
 
-export default async function Page() {
-  const sermons = await getSermons();
+export default async function Page({ searchParams }) {
+  const sp = await searchParams;
+  const theme = SERMON_THEMES.includes(sp.theme) ? sp.theme : '';
+  const n = Math.min(120, Math.max(STEP, parseInt(sp.n || String(STEP), 10) || STEP));
+  const all = await listSermons();
+  const filtered = theme ? all.filter((s) => s.tags.includes(theme)) : all;
+  const shown = filtered.slice(0, n);
   return (
     <>
-      <Hero eyebrow="Médias" title="Derniers" accent="sermons" text="Les enseignements de la Maison de la Transformation." image="/img/pasteur1.jpg" />
-      <section className="section"><SermonList sermons={sermons} channel={SITE.youtube} /></section>
+      <SermonsNav current="" />
+      <section className="section"><div className="container">
+        <div className="btn-row center" role="group" aria-label="Thèmes">
+          {SERMON_THEMES.map((t) => <Link key={t} className={`filter ${t === theme ? 'on' : ''}`} href={t === theme ? '/sermons' : `/sermons?theme=${encodeURIComponent(t)}`}>{t}</Link>)}
+        </div>
+        <div className="center stack mt"><Greeting /><h3 className="h3">Derniers sermons</h3></div>
+        {shown.length === 0 ? (
+          <div className="center stack mt">
+            <p className="lead">Les derniers enseignements sont disponibles sur notre chaîne YouTube.</p>
+            <a className="btn btn-navy" href={SITE.youtube} target="_blank" rel="noopener noreferrer">Regarder sur YouTube</a>
+          </div>
+        ) : <div className="grid g3 mt">{shown.map((s) => <SermonCard key={s.id} s={s} />)}</div>}
+        {filtered.length > n && <p className="center mt"><Link className="btn btn-navy" href={`/sermons?${theme ? `theme=${encodeURIComponent(theme)}&` : ''}n=${n + STEP}`}>Voir plus</Link></p>}
+      </div></section>
     </>
   );
 }

@@ -205,6 +205,7 @@ export const FORMS = {
 
   testimony: {
     title: 'Témoignage',
+    intro: 'Veuillez partager votre témoignage…',
     fields: [
       NAME(), PHONE({ label: 'Téléphone', required: true }), EMAIL({ required: true }),
       CAMPUS('lieu', 'Lieu', { width: 'half' }),
@@ -229,6 +230,166 @@ export const FORMS = {
     ],
   },
 
+  helpline_volunteer: {
+    title: 'Bénévoles de la ligne d’écoute',
+    fields: [
+      NAME(), f('genre', 'Genre', 'select', { required: true, width: 'half', options: ['Homme', 'Femme'] }), EMAIL({ required: true }),
+      f('telephone', 'Numéro de téléphone', 'tel', { required: true }),
+      CAMPUS('lieu', 'Lieu fréquenté'),
+      f('profession', 'Profession', 'select', { required: true, options: ['Conseiller certifié', 'Psychiatre', 'Psychologue', 'Thérapeute', 'Autres'] }),
+      f('profession_autre', 'Si autres, précisez', 'text', { required: true, showIf: { name: 'profession', in: ['Autres'] } }),
+      f('licence', 'Quand avez-vous obtenu votre licence ?', 'date', { required: true }),
+      f('justificatif', 'Lien vers vos diplômes et attestations (Drive, Dropbox…)', 'url', { required: true }),
+    ],
+  },
+
+  seniors_connect: {
+    title: 'Seniors Connect : base de données',
+    fields: [
+      NAME(), PHONE({ label: 'Téléphone', required: true }), EMAIL({ required: true }),
+      CAMPUS('lieu', 'Quel lieu MDT fréquentez-vous actuellement ?'),
+      f('localisation', 'Adresse', 'text'),
+      f('genre', 'Genre', 'select', { required: true, width: 'half', options: ['Homme', 'Femme'] }),
+      f('relation', 'Situation matrimoniale', 'select', { required: true, width: 'half', options: ['Célibataire', 'Marié(e)', 'Divorcé(e)', 'Veuf / Veuve', 'Séparé(e)'] }),
+      f('annee', 'En quelle année avez-vous rejoint la MDT ?', 'text', { required: true, width: 'half' }),
+      f('age', 'Tranche d’âge', 'select', { width: 'half', options: ['40 - 50', '50 - 60', '60 ans et plus'] }),
+    ],
+  },
+
+  feedback: {
+    title: 'Enquête de satisfaction',
+    anonymous: true,
+    fields: [
+      f('email', 'Email', 'email'),
+      CAMPUS('lieu', 'Lieux', { required: false }),
+      f('programme', 'Programme spécial', 'select', { options: ['Culte de célébration', 'Mercredi de Gloire', 'Classe de membres', 'Veillée des célibataires', 'Conférence mariage', 'Conférence parentalité', 'Conférence des hommes', 'Conférence des femmes', 'Camp', 'Jeunesse', 'Autre'] }),
+      f('s1', 'Enseignement', 'section'),
+      f('enseignement', 'Comment évaluez-vous la qualité de l’enseignement ? (1 : faible, 5 : excellent)', 'rating'),
+      f('enseignement_note', 'Qu’avez-vous retenu de l’enseignement ?', 'textarea'),
+      f('s2', 'Louange et adoration', 'section'),
+      f('louange', 'Comment évaluez-vous la louange ? (1 : faible, 5 : excellent)', 'rating'),
+      f('s3', 'Accueil et organisation', 'section'),
+      f('accueil', 'Comment évaluez-vous l’accueil ? (1 : faible, 5 : excellent)', 'rating'),
+      f('organisation', 'Comment évaluez-vous l’organisation (horaires, places, son) ? (1 : faible, 5 : excellent)', 'rating'),
+      f('s4', 'Vos suggestions', 'section'),
+      f('message', 'Autres suggestions ou commentaires', 'textarea'),
+    ],
+  },
+
+  protocol_attendance: {
+    title: 'Rapport de présence du protocole',
+    fields: [
+      NAME(), EMAIL({ required: true }), PHONE({ label: 'Téléphone', required: true }),
+      CAMPUS('lieu', 'Lieu', { width: 'half' }),
+      f('culte', 'Type de culte', 'select', { required: true, width: 'half', options: ['Culte du dimanche', 'Culte de semaine', 'Culte spécial'] }),
+      f('total', 'Total général', 'number', { required: true, width: 'half' }),
+      f('hommes', 'Hommes adultes', 'number', { required: true, width: 'half' }),
+      f('femmes', 'Femmes adultes', 'number', { required: true, width: 'half' }),
+      f('ados', 'Adolescents', 'number', { required: true, width: 'half' }),
+      f('enfants', 'Enfants', 'number', { required: true }),
+      f('message', 'Commentaire', 'textarea', { required: true }),
+    ],
+  },
+
+  youth_feedback: {
+    title: 'Jeunesse : retour d’expérience',
+    anonymous: true,
+    fields: [
+      f('experience', 'Comment évaluez-vous votre expérience globale ? (1 : faible, 5 : excellente)', 'rating', { required: true }),
+      f('enseignements', 'Les enseignements étaient-ils pertinents et marquants ? (1 : pas pertinents, 5 : très pertinents)', 'rating', { required: true }),
+      f('interactif', 'L’événement était-il assez dynamique et interactif ?', 'radio', { required: true, options: YN }),
+      f('musique', 'Comment évaluez-vous la musique ? (1 : faible, 5 : excellente)', 'rating', { required: true }),
+      f('moment', 'Quel artiste ou quel moment vous a le plus marqué ?', 'text', { required: true }),
+      f('jeux', 'Comment évaluez-vous les jeux et activités ? (1 : ennuyeux, 5 : très amusant)', 'rating'),
+      f('jeu_prefere', 'Quel jeu ou quelle activité avez-vous préféré ?', 'text', { required: true }),
+      f('jeux_inclusifs', 'Les jeux étaient-ils inclusifs pour tous ?', 'radio', { required: true, options: YN }),
+      f('organisation', 'Comment évaluez-vous l’organisation (accueil, places, horaires) ? (1 : faible, 5 : excellente)', 'rating', { required: true }),
+      f('lieu_ok', 'Le lieu était-il confortable et accessible ?', 'radio', { required: true, options: YN }),
+      f('lieu_pb', 'Si non, quelles ont été les difficultés ?', 'text', { showIf: { name: 'lieu_ok', in: ['Non'] } }),
+      f('message', 'Autres suggestions ou commentaires', 'textarea', { required: true }),
+    ],
+  },
+
+  pfl: {
+    title: 'Préparer sa vie',
+    fields: [
+      f('email', 'Email', 'email', { required: true }), NAME(), f('telephone', 'Téléphone', 'tel', { required: true }),
+      f('cours', 'Filière', 'text', { required: true }),
+      f('institution', 'Établissement', 'radio', { required: true, options: ['Université d’Abomey-Calavi', 'Université de Lomé', 'Autres'] }),
+      f('niveau', 'Niveau', 'radio', { required: true, options: ['Licence 1', 'Licence 2', 'Licence 3', 'Master 1', 'Master 2', 'Doctorat', 'Autres'] }),
+      f('interet', 'Domaine d’intérêt', 'radio', { required: true, options: ['Affaires', 'Carrière', 'Entrepreneuriat créatif', 'Travail indépendant', 'Autres'] }),
+      f('connu', 'Comment avez-vous entendu parler de la formation ?', 'radio', { required: true, options: ['Instagram', 'Facebook', 'Annonces à l’église', 'Un ami', 'Un influenceur', 'Une lettre d’information'] }),
+      f('objectif', 'Qu’espérez-vous obtenir de cette formation ?', 'text', { required: true }),
+    ],
+  },
+
+  camp_registration: {
+    title: 'Camp : inscription',
+    fields: [
+      NAME(), f('email', 'Adresse email', 'email'), f('telephone', 'Téléphone (de préférence WhatsApp)', 'tel', { required: true }),
+      CAMPUS('lieu', 'Quel lieu, cellule ou communauté MDT fréquentez-vous ?', { width: 'half' }),
+      f('unite', 'Dans quelle unité de service êtes-vous ?', 'select', { required: true, width: 'half', options: [...UNITS, 'Je n’ai pas encore rejoint d’unité'] }),
+      f('presence', 'Souhaitez-vous participer sur place ?', 'multi', { required: true, options: ['Oui, je veux participer', 'Non, je ne peux pas', 'Peut-être, pas encore sûr(e)'] }),
+      f('nuits', 'Combien de jours comptez-vous participer ?', 'multi', { required: true, options: ['3 nuits', '2 nuits', '1 nuit'] }),
+      f('jours', 'Quels jours comptez-vous participer ?', 'multi', { required: true, options: ['Jeudi', 'Vendredi', 'Samedi', 'Dimanche (départ avant 11h)'] }),
+      f('chambre', 'Type de chambre souhaité (tarifs communiqués après inscription)', 'multi', { required: true, options: ['Chambre double (convient aux familles)', 'Chambre simple'] }),
+      f('enfants', 'Viendrez-vous avec des enfants ?', 'radio', { required: true, options: YN }),
+      f('enfants_detail', 'Combien d’enfants de 4 à 11 ans ? Précisez l’âge de chacun', 'text', { required: true, showIf: { name: 'enfants', in: ['Oui'] } }),
+      f('transport', 'Avez-vous besoin d’un transport depuis votre lieu ?', 'multi', { required: true, options: ['Oui, je souhaite rejoindre un car subventionné', 'Non, j’organise mon transport'] }),
+      f('regime', 'Indiquez vos éventuelles contraintes alimentaires', 'text'),
+      f('besoins', 'Vous ou un membre de votre famille avez-vous des besoins spécifiques ou d’accessibilité ?', 'multi', { required: true, options: YN }),
+      f('benevole', 'Souhaitez-vous servir dans un département ?', 'multi', { options: ['Oui, je souhaite servir', 'Non, merci'] }),
+      f('departement', 'Choisissez le département', 'multi', { options: ['Entraide', 'Protocole', 'Enfants', 'Médias (photo et vidéo)', 'Ambiance ou son', 'Réseaux sociaux', 'Santé'] }),
+      f('infos', 'Souhaitez-vous être ajouté(e) à la liste d’information du camp ?', 'multi', { required: true, options: ['Oui, tenez-moi informé(e)', 'Non, merci'] }),
+      f('message', 'Commentaires ou questions complémentaires', 'textarea'),
+      f('accord', 'Je comprends que ce formulaire ne garantit pas une place tant que les instructions de réservation et de paiement n’ont pas été envoyées et suivies.', 'consent', { required: true }),
+    ],
+  },
+
+  legacy_fellow: {
+    title: 'Programme Legacy Fellows : candidature',
+    fields: [
+      NAME('nom', 'Nom complet (prénom, nom)'), f('email', 'Adresse email', 'email', { required: true }), f('telephone', 'Téléphone (de préférence WhatsApp)', 'tel', { required: true }),
+      f('genre', 'Genre', 'select', { required: true, options: ['Homme', 'Femme'] }),
+      CAMPUS('lieu', 'Lieu MDT'),
+      f('certificat', 'Lien vers votre certificat de membre (partagez le lien ci-dessous)', 'url', { required: true }),
+      f('lettre', 'Lien vers la lettre de recommandation du pasteur résident', 'url', { required: true }),
+      f('residence', 'Pays de résidence', 'country', { required: true }),
+      f('nationalite', 'Nationalité', 'country', { required: true }),
+      f('parcours', 'Bref résumé de votre parcours (150 mots maximum)', 'textarea', { required: true }),
+      f('projet', 'Avez-vous actuellement un projet d’héritage ?', 'radio', { required: true, options: ['Oui', 'Non', 'Peut-être'] }),
+      f('projet_desc', 'Si oui, décrivez brièvement votre projet (avec l’impact prévu)', 'textarea', { required: true, showIf: { name: 'projet', in: ['Oui'] } }),
+      f('probleme', 'Quel problème votre projet cherche-t-il à résoudre, et pourquoi est-ce important pour vous ?', 'textarea', { required: true }),
+      f('cible', 'Quel est votre public cible ou groupe bénéficiaire ?', 'text', { required: true }),
+      f('stade', 'À quel stade est actuellement votre projet ?', 'radio', { required: true, options: ['Idée', 'Planification', 'Phase pilote', 'Déjà en cours', 'Autre'] }),
+      f('theme', 'Expliquez brièvement comment le projet incarne le thème de l’année Legacy : montrer concrètement l’amour de Dieu et l’amour des autres.', 'textarea', { required: true }),
+      f('video', 'Enregistrez une vidéo d’une minute présentant votre projet et son impact (lien)', 'url', { required: true }),
+      f('pourquoi', 'Pourquoi voulez-vous faire partie de la fraternité Legacy ?', 'textarea', { required: true }),
+      f('croissance', 'Comment cette fraternité vous aidera-t-elle à grandir personnellement et professionnellement ?', 'textarea', { required: true }),
+      f('heritage', 'Quel héritage espérez-vous laisser à travers votre projet ou l’œuvre de votre vie ?', 'textarea', { required: true }),
+      f('disponible', 'Êtes-vous disponible pour 3 mois de fraternité virtuelle, avec des sessions toutes les deux semaines et des points réguliers ?', 'radio', { required: true, options: ['Oui', 'Non', 'Peut-être'] }),
+      f('connu', 'Comment avez-vous entendu parler de la fraternité Legacy ?', 'radio', { required: true, options: ['Instagram', 'Lettre d’information de l’église', 'Un ami', 'Annonce à l’église', 'Groupe WhatsApp de l’église'] }),
+    ],
+  },
+
+  legacy_spotlight: {
+    title: 'Legacy : projets à l’honneur',
+    fields: [
+      NAME('nom', 'Nom complet (prénom, nom)'), f('email', 'Adresse email', 'email', { required: true }), f('telephone', 'Téléphone (de préférence WhatsApp)', 'tel', { required: true }),
+      f('genre', 'Genre', 'select', { required: true, options: ['Homme', 'Femme'] }),
+      CAMPUS('lieu', 'Lieu MDT'),
+      f('reseaux', 'Comptes de réseaux sociaux (Instagram, X…)', 'text', { required: true }),
+      f('certificat', 'Lien vers votre certificat de membre (partagez le lien ci-dessous)', 'url', { required: true }),
+      f('projet', 'Titre et bref résumé de votre projet (150 mots maximum), avec l’impact visé', 'textarea', { required: true }),
+      f('cible', 'Quel est votre public cible ou bénéficiaire, et le lieu du projet ?', 'textarea', { required: true }),
+      f('probleme', 'Quel problème votre projet visait-il à résoudre, et pourquoi est-ce important pour vous ?', 'textarea', { required: true }),
+      f('theme', 'Expliquez brièvement comment le projet incarne le thème de l’année Legacy : montrer concrètement l’amour de Dieu et l’amour des autres.', 'textarea', { required: true }),
+      f('resultats', 'Indiquez les résultats clés et les effets directs du projet (ex. : « 50 enfants ont reçu des kits scolaires »)', 'textarea', { required: true }),
+      f('medias', 'Lien vers une vidéo témoignage d’une minute, des photos et une vidéo de synthèse du projet', 'url', { required: true }),
+      f('partenaires', 'Noms et comptes Instagram des co-réalisateurs, le cas échéant', 'text'),
+    ],
+  },
+
   volunteer: {
     title: 'Bénévoles',
     fields: [
@@ -242,6 +403,7 @@ export const FORMS = {
   },
 };
 
+export const NO_PERSON = new Set(Object.entries(FORMS).filter(([, v]) => v.anonymous).map(([k]) => k));
 export const FORM_TYPES = Object.keys(FORMS);
 
 // Champs visibles selon showIf

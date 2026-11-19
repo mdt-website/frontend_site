@@ -1,7 +1,7 @@
 import { db } from '@/lib/db';
 import { REQUEST_TYPES } from '@/lib/crm';
-import { isCampus } from '@/lib/campuses';
-import { FORMS, isShown } from '@/lib/forms';
+import { CAMPUS_LIST, isCampus } from '@/lib/campuses';
+import { FORMS, NO_PERSON, isShown } from '@/lib/forms';
 import { clientIp, isEmail, normalizePhone, rateLimit } from '@/lib/security';
 
 const MAX_FIELD = 4000;
@@ -68,7 +68,7 @@ export async function POST(req) {
   const { type } = body;
   // Le lieu vient du sous-domaine (en-tête posé par le proxy, jamais par le client)
   const hc = req.headers.get('x-campus');
-  const campus = isCampus(hc) ? hc : 'calavi';
+  let campus = isCampus(hc) ? hc : null;
 
   // Newsletter : table dédiée
   if (type === 'newsletter') {
@@ -87,7 +87,7 @@ export async function POST(req) {
     const raw = {};
     for (const f of spec.fields) raw[f.name] = body[f.name];
     for (const f of spec.fields) {
-      if (!isShown(f, raw)) continue;
+      if (f.type === 'section' || !isShown(f, raw)) continue;
       let v = raw[f.name];
       if (f.type === 'multi') {
         v = Array.isArray(v) ? v.filter((x) => typeof x === 'string' && f.options.includes(x)) : [];
@@ -97,6 +97,9 @@ export async function POST(req) {
       } else if (typeof v === 'string' && v.trim()) {
         v = v.trim().slice(0, MAX_FIELD);
         if ((f.type === 'select' || f.type === 'radio') && !f.options.includes(v)) return json({ error: `Valeur invalide : ${f.label}` }, 400);
+        if (f.type === 'rating' && !/^[1-5]$/.test(v)) return json({ error: `Note invalide : ${f.label}` }, 400);
+        if (f.type === 'number' && !/^\d{1,6}$/.test(v)) return json({ error: `Nombre invalide : ${f.label}` }, 400);
+        if (f.type === 'url' && !/^https?:\/\/\S+$/i.test(v)) return json({ error: `Lien invalide : ${f.label}` }, 400);
         if (f.type === 'date' && !/^\d{4}-\d{2}-\d{2}$/.test(v)) return json({ error: `Date invalide : ${f.label}` }, 400);
         if (f.type === 'time' && !/^\d{2}:\d{2}$/.test(v)) return json({ error: `Heure invalide : ${f.label}` }, 400);
         if (f.type === 'email' && !isEmail(v)) return json({ error: `Email invalide : ${f.label}` }, 400);
@@ -119,7 +122,16 @@ export async function POST(req) {
   if (data.telephone && !phone) return json({ error: 'Numéro de téléphone invalide' }, 400);
   if (data.email && !isEmail(data.email)) return json({ error: 'Email invalide' }, 400);
   if (data.email) data.email = data.email.toLowerCase();
-  if (!data.nom) return json({ error: 'Veuillez remplir tous les champs obligatoires.' }, 400);
+  if (!data.nom && !NO_PERSON.has(type)) return json({ error: 'Veuillez remplir tous les champs obligatoires.' }, 400);
+
+  if (!campus) campus = CAMPUS_LIST.find((c) => c.name === (data.lieu || data.partenaire_lieu))?.slug || 'calavi';
+
+  // Enquêtes anonymes : pas de fiche personne
+  if (NO_PERSON.has(type)) {
+    const r = await db.request.create({ data: { type, campus, data: JSON.stringify(data) } });
+    await notify(type, 'anonyme');
+    return json({ ok: true, id: r.id });
+  }
 
   // CRM : retrouver ou créer la personne (téléphone, sinon email)
   const email = data.email || null;

@@ -86,6 +86,9 @@ model Sermon {
   tags      String   @default("") // séparés par des virgules
   url       String   // lien YouTube / vidéo
   audioUrl  String?
+  slug      String?  @unique
+  series    String?
+  description String @default("")
   published Boolean  @default(true)
   createdAt DateTime @default(now())
 

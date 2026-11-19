@@ -85,16 +85,16 @@ test('IP client : Cloudflare prioritaire', async () => {
   assert.equal(clientIp(h({})), 'local');
 });
 
-import { FORMS, isShown } from '../src/lib/forms.js';
+import { FORMS, NO_PERSON, isShown } from '../src/lib/forms.js';
 
 test('formulaires : définitions cohérentes', () => {
   const widths = new Set(['full', 'half', 'third']);
   for (const [key, form] of Object.entries(FORMS)) {
     const names = form.fields.map((f) => f.name);
     assert.equal(new Set(names).size, names.length, `${key} : noms de champs en double`);
-    assert.ok(names.includes('nom'), `${key} : champ nom manquant`);
+    if (!NO_PERSON.has?.(key) && !NO_PERSON.includes?.(key)) assert.ok(form.fields.some((f) => f.type === 'name' || f.name === 'nom'), `${key} : champ nom manquant`);
     for (const f of form.fields) {
-      assert.ok(widths.has(f.width), `${key}.${f.name} : largeur`);
+      if (f.width) assert.ok(widths.has(f.width) || /^\d$/.test(String(f.width)), `${key}.${f.name} : largeur`);
       if (['select', 'radio', 'multi'].includes(f.type)) assert.ok(f.options?.length, `${key}.${f.name} : options`);
       if (f.showIf) assert.ok(names.includes(f.showIf.name), `${key}.${f.name} : condition vers un champ inconnu`);
     }

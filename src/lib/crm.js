@@ -21,6 +21,15 @@ export const REQUEST_TYPES = {
   contact: 'Message de contact',
   donation: 'Don annoncé',
   event_register: 'Inscription à un événement',
+  helpline_volunteer: 'Bénévole de la ligne d’écoute',
+  seniors_connect: 'Seniors Connect',
+  feedback: 'Enquête de satisfaction',
+  protocol_attendance: 'Rapport de présence du protocole',
+  youth_feedback: 'Jeunesse : retour d’expérience',
+  pfl: 'Préparer sa vie',
+  camp_registration: 'Inscription au camp',
+  legacy_fellow: 'Legacy Fellows : candidature',
+  legacy_spotlight: 'Legacy : projet à l’honneur',
 };
 
 export const STATUS = { NEW: 'Nouvelle', IN_PROGRESS: 'En cours', DONE: 'Traitée', ARCHIVED: 'Archivée' };

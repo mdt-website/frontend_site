@@ -8,7 +8,7 @@ export default function FormPage({ type, form, eyebrow, title, accent, text, ima
   return (
     <>
       {form
-        ? <Hero eyebrow="Formulaires" title={FORMS[form].title} text="Veuillez renseigner vos informations" image={image} />
+        ? <Hero eyebrow="Formulaires" title={FORMS[form].title} text={FORMS[form].intro} image={image}><p className="lead">Veuillez renseigner vos informations</p></Hero>
         : <Hero eyebrow={eyebrow} title={title} accent={accent} text={text} image={image} />}
       <section className="section bg-cream">
         <div className="container">

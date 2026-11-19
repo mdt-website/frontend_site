@@ -1,6 +1,7 @@
 'use client';
 import { useMemo, useState } from 'react';
 import { FORMS, isShown } from '@/lib/forms';
+import { DIAL_CODES, countryNames } from '@/lib/countries';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_RE = /^[+\d][\d\s().-]{6,}$/;
@@ -20,18 +21,26 @@ export default function RequestForm({ type, form, fields: legacy, submitLabel = 
     next[n] = [next[`${n}__p`], next[`${n}__n`]].map((x) => (x || '').trim()).filter(Boolean).join(' ');
     return next;
   });
+  const setTel = (n, part, v) => setValues((s) => {
+    const next = { ...s, [`${n}__${part}`]: v };
+    const local = (next[`${n}__l`] || '').trim();
+    next[n] = local ? `${next[`${n}__c`] || DIAL_CODES[0][1]} ${local}` : '';
+    return next;
+  });
   const toggle = (n, o) => setValues((s) => { const cur = new Set(s[n] || []); cur.has(o) ? cur.delete(o) : cur.add(o); return { ...s, [n]: [...cur] }; });
 
   const validate = () => {
     const e = {};
     fields.forEach((f) => {
-      if (!isShown(f, values)) return;
+      if (f.type === 'section' || !isShown(f, values)) return;
       const v = values[f.name];
       const empty = v == null || v === '' || v === false || (Array.isArray(v) && !v.length) || (typeof v === 'string' && !v.trim());
       if (f.type === 'name' && f.required && (!(values[`${f.name}__p`] || '').trim() || !(values[`${f.name}__n`] || '').trim())) e[f.name] = 'Prénom et nom requis';
       else if (f.required && empty) e[f.name] = 'Ce champ est requis';
       else if (f.type === 'email' && v && !EMAIL_RE.test(v)) e[f.name] = 'Email invalide';
-      else if (f.type === 'tel' && v && !PHONE_RE.test(v)) e[f.name] = 'Numéro invalide';
+      else if (f.type === 'tel' && (values[`${f.name}__l`] || '').trim() && !PHONE_RE.test(values[`${f.name}__l`])) e[f.name] = 'Numéro invalide';
+      else if (f.type === 'url' && v && !/^https?:\/\/\S+$/i.test(v)) e[f.name] = 'Lien invalide (commencez par https://)';
+      else if (f.type === 'number' && v && !/^\d{1,6}$/.test(v)) e[f.name] = 'Nombre invalide';
     });
     setErrors(e);
     return !Object.keys(e).length;
@@ -42,7 +51,7 @@ export default function RequestForm({ type, form, fields: legacy, submitLabel = 
     if (!validate()) return;
     setStatus('sending');
     const body = {};
-    fields.forEach((f) => { if (isShown(f, values) && values[f.name] != null) body[f.name] = values[f.name]; });
+    fields.forEach((f) => { if (f.type !== 'section' && isShown(f, values) && values[f.name] != null) body[f.name] = values[f.name]; });
     try {
       const res = await fetch('/api/requests', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type, ...body, ...extra, website: hp }) });
       if (!res.ok) throw new Error((await res.json().catch(() => ({}))).error || 'Envoi impossible, veuillez réessayer.');
@@ -92,6 +101,30 @@ export default function RequestForm({ type, form, fields: legacy, submitLabel = 
               </div>
             );
           }
+          if (f.type === 'section') {
+            return <h3 className="form__c6 form__section" key={f.name}>{f.label}</h3>;
+          }
+          if (f.type === 'tel') {
+            return (
+              <div className={cls} key={f.name}>
+                <label htmlFor={id}>{f.label}{req}</label>
+                <div className="form__tel">
+                  <select aria-label="Indicatif du pays" value={values[`${f.name}__c`] || DIAL_CODES[0][1]} onChange={(e) => setTel(f.name, 'c', e.target.value)}>{DIAL_CODES.map(([n, c]) => <option key={n} value={c}>{n} {c}</option>)}</select>
+                  <input id={id} type="tel" autoComplete="tel-national" placeholder={f.placeholder?.replace(/^\+\d+\s*/, '') || '01 41 37 37 41'} value={values[`${f.name}__l`] || ''} onChange={(e) => setTel(f.name, 'l', e.target.value)} />
+                </div>
+                {err}
+              </div>
+            );
+          }
+          if (f.type === 'rating') {
+            return (
+              <fieldset className={`${cls} form__choices`} key={f.name}>
+                <legend>{f.label}{req}</legend>
+                <div className="form__opts">{[1, 2, 3, 4, 5].map((n) => <label key={n} className="form__opt"><input type="radio" name={f.name} checked={values[f.name] === String(n)} onChange={() => set(f.name, String(n))} /><span>{n}</span></label>)}</div>
+                {err}
+              </fieldset>
+            );
+          }
           if (f.type === 'radio' || f.type === 'multi') {
             const multi = f.type === 'multi';
             return (
@@ -113,8 +146,9 @@ export default function RequestForm({ type, form, fields: legacy, submitLabel = 
             <div className={cls} key={f.name}>
               <label htmlFor={id}>{f.label}{req}</label>
               {f.type === 'textarea' ? <textarea id={id} rows={5} value={values[f.name] || ''} onChange={(e) => set(f.name, e.target.value)} />
+                : f.type === 'country' ? <select id={id} value={values[f.name] || ''} onChange={(e) => set(f.name, e.target.value)}><option value="">Choisir…</option>{countryNames().map((o) => <option key={o}>{o}</option>)}</select>
                 : f.type === 'select' ? <select id={id} value={values[f.name] || ''} onChange={(e) => set(f.name, e.target.value)}><option value="">Choisir…</option>{f.options.map((o) => <option key={o}>{o}</option>)}</select>
-                : <input id={id} type={f.type || 'text'} placeholder={f.placeholder} autoComplete={f.type === 'email' ? 'email' : f.type === 'tel' ? 'tel' : undefined} value={values[f.name] || ''} onChange={(e) => set(f.name, e.target.value)} />}
+                : <input id={id} type={f.type === 'number' ? 'text' : f.type || 'text'} inputMode={f.type === 'number' ? 'numeric' : undefined} placeholder={f.placeholder} autoComplete={f.type === 'email' ? 'email' : f.type === 'tel' ? 'tel' : undefined} value={values[f.name] || ''} onChange={(e) => set(f.name, e.target.value)} />}
               {err}
             </div>
           );
