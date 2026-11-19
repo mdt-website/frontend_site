@@ -64,7 +64,7 @@ export default function Home() {
       </section>
 
       {/* 4. Bannière plein écran */}
-      <section className="banner" style={{ backgroundImage: 'url(/img/fond2.png)' }}>
+      <section className="banner" style={{ backgroundImage: 'url(/img/fond2.jpg)' }}>
         <div className="container stack">
           <h2 className="h2">Nous nous glorifions en <span className="accent">Christ Jésus</span></h2>
           <p className="lead">Notre plus belle réussite est la grâce de voir des personnes, autrefois simples chercheurs de Dieu, devenir des disciples mûrs et de vaillants serviteurs de l’Évangile.</p>
@@ -93,7 +93,7 @@ export default function Home() {
       {/* 6. Pasteur principal */}
       <section className="section bg-dark">
         <div className="container split">
-          <img src="/img/PastorImage.jpg" alt="Pasteur Herbert Donald" style={{ objectPosition: 'top' }} />
+          <img loading="lazy" src="/img/PastorImage.jpg" alt="Pasteur Herbert Donald" style={{ objectPosition: 'top' }} />
           <div className="stack">
             <h2 className="h2">Notre pasteur <span className="accent">principal</span></h2>
             <p className="lead">Le pasteur Herbert Donald est le pasteur principal de La Maison de la Transformation, une église où le Seigneur œuvre puissamment pour nous transformer à Son image, de gloire en gloire, par l’enseignement de la Parole et la conduite du Saint-Esprit.</p>

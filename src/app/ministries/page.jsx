@@ -11,7 +11,7 @@ export default function Page() {
       {MINISTRIES.map((m, i) => (
         <section key={m.id} id={m.id} className={`section ${i % 2 ? 'bg-cream' : ''}`}>
           <div className={`container split ${i % 2 ? 'rev' : ''}`}>
-            <img src={m.img} alt={m.title} />
+            <img loading="lazy" src={m.img} alt={m.title} />
             <div className="stack">
               <span className="pill" style={{ color: 'var(--navy)' }}>Ministère</span>
               <h2 className="h2">{m.title}</h2>

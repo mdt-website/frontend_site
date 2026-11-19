@@ -63,7 +63,7 @@ export default function About() {
 
       <section className="section bg-dark" id="pasteur">
         <div className="container split">
-          <img src="/img/pasteur1.jpg" alt="Pasteur Herbert Donald" />
+          <img loading="lazy" src="/img/pasteur1.jpg" alt="Pasteur Herbert Donald" />
           <div className="stack">
             <h2 className="h2">Notre pasteur <span className="accent">principal</span></h2>
             <h3 style={{ color: 'var(--gold)' }}>Héribert Donald Mélé</h3>

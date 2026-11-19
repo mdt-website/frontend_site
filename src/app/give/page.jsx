@@ -17,7 +17,7 @@ const METHODS = [
 export default function Page() {
   return (
     <>
-      <Hero eyebrow="Donner" title="Votre générosité," accent="notre mission" text="Donnez pour soutenir la vision de la Maison de la Transformation et l’avancement de l’Évangile." image="/img/fond2.png">
+      <Hero eyebrow="Donner" title="Votre générosité," accent="notre mission" text="Donnez pour soutenir la vision de la Maison de la Transformation et l’avancement de l’Évangile." image="/img/fond2.jpg">
         <div className="btn-row center"><a className="btn btn-gold" href="#moyens">Donner maintenant</a><Link className="btn btn-outline" href="/building-project">Autres façons de donner</Link></div>
       </Hero>
 
