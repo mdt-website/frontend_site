@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@prisma/client": "^6.19.3",
+    "@prisma/client": "^7.10.1",
     "next": "^16.4.6",
     "nodemailer": "^6.10.1",
     "prisma": "^6.19.3",
