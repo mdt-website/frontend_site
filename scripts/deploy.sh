@@ -3,6 +3,10 @@ set -euo pipefail
 
 cd /srv/mdt
 
+set -a
+. /srv/mdt/.env.local
+set +a
+
 if [ ! -d .git ]; then
   git init -q
   git remote add origin https://github.com/mdt-website/frontend_site.git
