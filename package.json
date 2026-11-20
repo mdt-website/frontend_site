@@ -5,7 +5,7 @@
   "dependencies": {
     "@prisma/client": "^6.19.3",
     "next": "^16.4.6",
-    "nodemailer": "^6.10.1",
+    "nodemailer": "^10.6.0",
     "prisma": "^6.19.3",
     "qrcode": "^1.5.4",
     "react": "^19.1.0",
